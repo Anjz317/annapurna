@@ -1,0 +1,1150 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<title>Annapurna</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F7F1;
+    --surface:#FFFFFF;
+    --surface-soft:#EEF2E8;
+    --ink:#1C2620;
+    --ink-soft:#4B5A4F;
+    --ink-faint:#7C8A7C;
+    --line:#DCE4D6;
+    --accent:#B8720F;
+    --accent-ink:#2A1800;
+    --accent-soft:#F4E3C6;
+    --accent2:#2F6F5E;
+    --accent2-soft:#DCEEE8;
+    --focus:#2F6F5E;
+    --shadow: 0 1px 2px rgba(28,38,32,.06), 0 8px 24px -12px rgba(28,38,32,.22);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121810; --surface:#1A2118; --surface-soft:#212B1E;
+      --ink:#ECF1E7; --ink-soft:#B7C4B4; --ink-faint:#7E8C7C;
+      --line:#2B372A; --accent:#E0A23D; --accent-ink:#241500; --accent-soft:#3A2C10;
+      --accent2:#5AB79C; --accent2-soft:#173029; --focus:#5AB79C;
+      --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px -12px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121810; --surface:#1A2118; --surface-soft:#212B1E;
+    --ink:#ECF1E7; --ink-soft:#B7C4B4; --ink-faint:#7E8C7C;
+    --line:#2B372A; --accent:#E0A23D; --accent-ink:#241500; --accent-soft:#3A2C10;
+    --accent2:#5AB79C; --accent2-soft:#173029; --focus:#5AB79C;
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px -12px rgba(0,0,0,.55);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans',system-ui,-apple-system,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+  button, input, select{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+
+  .wrap{max-width:960px;margin:0 auto;padding-inline:20px;}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-block:22px;border-bottom:1px solid var(--line);
+  }
+  .brand{display:flex;align-items:baseline;gap:.5em;}
+  .brand .mark{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.35rem;letter-spacing:-.01em;}
+  .brand .sub{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);}
+  #start-over-btn{
+    font-family:'IBM Plex Mono',monospace;font-size:.75rem;letter-spacing:.04em;
+    background:none;border:1px solid var(--line);border-radius:99px;color:var(--ink-soft);
+    padding:.5em 1.1em;cursor:pointer;
+  }
+  #start-over-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+
+  main{padding-block:44px 60px;}
+
+  /* ---- Start screen ---- */
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;}
+  @media (max-width:680px){.hero{grid-template-columns:1fr;}}
+  .hero h1{
+    font-family:'Fraunces',Georgia,serif;font-weight:600;
+    font-size:clamp(2.2rem,5.5vw,3.1rem);line-height:1.06;letter-spacing:-.01em;
+    text-wrap:balance;margin:0 0 .5em;
+  }
+  .hero .lede{color:var(--ink-soft);font-size:1.08rem;max-width:42ch;margin:0 0 1.6em;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;}
+  .btn{
+    font-family:'Work Sans',sans-serif;font-weight:600;font-size:.95rem;
+    padding:.9em 1.4em;border-radius:9px;border:1px solid transparent;cursor:pointer;
+    display:inline-flex;align-items:center;gap:.5em;
+  }
+  .btn-primary{background:var(--accent);color:var(--accent-ink);}
+  .btn-primary:hover{filter:brightness(1.06);}
+  .btn-secondary{background:var(--surface);color:var(--ink);border-color:var(--line);}
+  .btn-secondary:hover{border-color:var(--accent2);color:var(--accent2);}
+  .continue-link{
+    display:inline-block;margin-top:16px;font-size:.85rem;color:var(--accent2);
+    background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;
+    text-underline-offset:3px;
+  }
+
+  .thali{position:relative;width:100%;max-width:340px;aspect-ratio:1;margin-inline:auto;}
+  .thali .rim{
+    position:absolute;inset:0;border-radius:50%;
+    background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);
+  }
+  .thali .rice{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:38%;height:38%;border-radius:50%;background:var(--surface-soft);border:1px solid var(--line);
+  }
+  .thali .katori{
+    position:absolute;width:26%;height:26%;border-radius:50%;
+    border:1px solid var(--line);box-shadow:var(--shadow);
+    animation:settle .6s ease both;
+  }
+  .thali .k1{background:var(--accent-soft);top:6%;left:50%;transform:translateX(-50%);animation-delay:.05s;}
+  .thali .k2{background:var(--accent2-soft);top:50%;right:4%;transform:translateY(-50%);animation-delay:.15s;}
+  .thali .k3{background:var(--accent-soft);bottom:6%;left:50%;transform:translateX(-50%);animation-delay:.25s;}
+  .thali .k4{background:var(--accent2-soft);top:50%;left:4%;transform:translateY(-50%);animation-delay:.35s;}
+  @keyframes settle{from{opacity:0;transform:scale(.6) translateY(-50%);}to{opacity:1;}}
+  @media (prefers-reduced-motion: reduce){.thali .katori{animation:none;}}
+
+  /* ---- Profile screen ---- */
+  .path-tabs{display:flex;gap:8px;margin-bottom:28px;border-bottom:1px solid var(--line);}
+  .path-tab{
+    font-family:'Work Sans',sans-serif;font-weight:600;font-size:.92rem;
+    background:none;border:none;padding:.7em .2em;margin-right:20px;
+    color:var(--ink-faint);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;
+  }
+  .path-tab.active{color:var(--ink);border-color:var(--accent);}
+
+  h2.section-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.4rem;margin:0 0 6px;}
+  p.section-hint{color:var(--ink-soft);margin:0 0 20px;font-size:.94rem;}
+
+  .persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media (max-width:760px){.persona-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.persona-grid{grid-template-columns:1fr;}}
+  .persona-card{
+    text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:16px;cursor:pointer;box-shadow:var(--shadow);
+  }
+  .persona-card:hover{border-color:var(--accent2);}
+  .persona-card.selected{border-color:var(--accent2);box-shadow:0 0 0 2px var(--accent2-soft);}
+  .persona-card .p-name{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:1.05rem;}
+  .persona-card .p-meta{font-size:.8rem;color:var(--ink-faint);margin-top:2px;}
+  .persona-card .p-flags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+
+  .chip{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.66rem;letter-spacing:.02em;
+    padding:.25em .6em;border-radius:99px;background:var(--surface-soft);color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .chip.flag{background:var(--accent-soft);color:var(--accent-ink);}
+  :root:not([data-theme="light"]) .chip.flag, :root[data-theme="dark"] .chip.flag{color:var(--ink);}
+  .chip.goal{background:var(--accent2-soft);color:var(--accent2);}
+
+  .manual-form{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:var(--shadow);}
+  .form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  @media (max-width:680px){.form-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:460px){.form-grid{grid-template-columns:1fr;}}
+  .field label{display:block;font-size:.82rem;font-weight:600;margin-bottom:5px;}
+  .field .hint{display:block;font-size:.72rem;color:var(--ink-faint);margin-top:4px;font-family:'IBM Plex Mono',monospace;}
+  .field input, .field select{
+    width:100%;padding:.6em .7em;border:1px solid var(--line);border-radius:7px;
+    background:var(--bg);color:var(--ink);font-size:.92rem;font-variant-numeric:tabular-nums;
+  }
+  .field-full{grid-column:1/-1;}
+  .divider{height:1px;background:var(--line);margin:20px 0;}
+
+  .plan-toggle{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:3px;margin:18px 0 26px;background:var(--surface);}
+  .plan-toggle button{
+    border:none;background:none;padding:.55em 1.2em;border-radius:99px;font-weight:600;font-size:.85rem;
+    color:var(--ink-faint);cursor:pointer;
+  }
+  .plan-toggle button.active{background:var(--accent);color:var(--accent-ink);}
+
+  .generate-row{margin-top:26px;display:flex;align-items:center;gap:14px;}
+
+  /* ---- Analyzing screen ---- */
+  .analyzing{max-width:520px;margin:40px auto;text-align:left;}
+  .analyzing h2{font-family:'Fraunces',Georgia,serif;font-size:1.5rem;margin:0 0 22px;text-align:center;}
+  .checklist{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:.86rem;color:var(--ink-faint);min-height:220px;}
+  .checklist li{display:flex;gap:10px;align-items:flex-start;opacity:0;animation:fadein .35s ease forwards;}
+  .checklist li .dot{width:1.1em;flex:none;color:var(--accent2);}
+  @keyframes fadein{to{opacity:1;}}
+  .analyzing-actions{text-align:center;margin-top:26px;}
+
+  /* ---- Plan screen ---- */
+  .plan-header{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:8px;}
+  .profile-chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .rationale{
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;
+    padding:18px 20px;margin:20px 0 26px;box-shadow:var(--shadow);
+  }
+  .rationale h3{margin:0 0 10px;font-family:'Work Sans',sans-serif;font-size:.92rem;font-weight:700;
+    text-transform:uppercase;letter-spacing:.06em;color:var(--accent2);}
+  .rationale ul{margin:0;padding-left:1.15em;color:var(--ink-soft);font-size:.92rem;}
+  .rationale li{margin:.4em 0;}
+
+  .week-tabs{display:flex;gap:8px;margin-bottom:16px;}
+  .week-tab{
+    font-family:'IBM Plex Mono',monospace;font-size:.78rem;padding:.5em 1em;border-radius:8px;
+    border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);cursor:pointer;
+  }
+  .week-tab.active{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink);}
+  :root:not([data-theme="light"]) .week-tab.active, :root[data-theme="dark"] .week-tab.active{color:var(--ink);}
+
+  .grid-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;}
+  table.plan-grid{border-collapse:collapse;width:100%;min-width:760px;}
+  table.plan-grid thead th{
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-faint);background:var(--surface-soft);padding:10px 8px;text-align:left;
+    border-bottom:1px solid var(--line);white-space:nowrap;
+  }
+  table.plan-grid th.slot-head, table.plan-grid td.slot-head{
+    font-family:'Work Sans',sans-serif;text-transform:none;letter-spacing:0;font-weight:600;color:var(--ink);
+    background:var(--surface);position:sticky;left:0;min-width:110px;
+  }
+  table.plan-grid td.slot-head .time{display:block;font-family:'IBM Plex Mono',monospace;font-weight:400;font-size:.7rem;color:var(--ink-faint);margin-top:2px;}
+  table.plan-grid td{border-bottom:1px solid var(--line);padding:6px;vertical-align:top;}
+  table.plan-grid tr:last-child td{border-bottom:none;}
+  .meal-card{
+    width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;
+    padding:8px 10px;cursor:pointer;min-width:130px;
+  }
+  .meal-card:hover{border-color:var(--accent2);}
+  .meal-card .m-name{font-size:.83rem;font-weight:600;display:block;line-height:1.3;}
+  .meal-card .m-meta{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+  .meal-card .m-cal{font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink-faint);}
+
+  /* ---- Modal ---- */
+  .modal-backdrop{
+    position:fixed;inset:0;background:rgba(20,26,20,.5);display:flex;align-items:center;justify-content:center;
+    padding:20px;z-index:10;
+  }
+  .modal{
+    background:var(--surface);border-radius:14px;max-width:560px;width:100%;max-height:86vh;overflow-y:auto;
+    padding:26px 26px 28px;box-shadow:var(--shadow);position:relative;
+  }
+  .modal-close{
+    position:absolute;top:16px;right:16px;background:var(--surface-soft);border:1px solid var(--line);
+    border-radius:50%;width:32px;height:32px;cursor:pointer;color:var(--ink-soft);font-size:1rem;line-height:1;
+  }
+  .modal h3{font-family:'Fraunces',Georgia,serif;font-size:1.4rem;margin:0 0 4px;padding-right:36px;}
+  .modal .m-region{font-size:.8rem;color:var(--ink-faint);margin-bottom:14px;}
+  .macro-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
+  .macro{background:var(--surface-soft);border-radius:8px;padding:10px 8px;text-align:center;}
+  .macro .v{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;font-weight:600;font-size:1.05rem;display:block;}
+  .macro .l{font-size:.66rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;}
+  .why-box{background:var(--accent2-soft);color:var(--accent2);border-radius:8px;padding:12px 14px;font-size:.88rem;margin-bottom:18px;}
+  :root:not([data-theme="light"]) .why-box, :root[data-theme="dark"] .why-box{color:var(--ink);}
+  .modal h4{font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-faint);margin:18px 0 8px;}
+  .modal ul, .modal ol{margin:0;padding-left:1.2em;color:var(--ink-soft);font-size:.92rem;}
+  .modal li{margin:.4em 0;}
+
+  footer.disclaimer{
+    text-align:center;font-size:.78rem;color:var(--ink-faint);padding:20px 20px 40px;
+  }
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><span class="mark">Annapurna</span><span class="sub">Meal Plan Prototype</span></div>
+    <button id="start-over-btn" hidden>Start over</button>
+  </div>
+
+  <main>
+    <!-- START -->
+    <section id="screen-start" class="screen">
+      <div class="hero">
+        <div>
+          <h1>Your biomarkers, your goals, your thali.</h1>
+          <p class="lede">Annapurna reads your biomarkers, diet, and goals, then builds an Indian meal plan around them — full recipes included, not just a food list.</p>
+          <div class="cta-row">
+            <button class="btn btn-primary" id="btn-sample">Try a sample profile</button>
+            <button class="btn btn-secondary" id="btn-manual">Enter my own details</button>
+          </div>
+          <button class="continue-link" id="btn-continue" hidden></button>
+        </div>
+        <div class="thali" aria-hidden="true">
+          <div class="rim"></div>
+          <div class="katori k1"></div>
+          <div class="katori k2"></div>
+          <div class="katori k3"></div>
+          <div class="katori k4"></div>
+          <div class="rice"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section id="screen-profile" class="screen" hidden>
+      <div class="path-tabs">
+        <button class="path-tab" id="tab-sample">Sample profile</button>
+        <button class="path-tab" id="tab-manual">My own details</button>
+      </div>
+
+      <div id="panel-sample">
+        <h2 class="section-title">Pick a profile</h2>
+        <p class="section-hint">Six profiles spanning diet, background, and biomarker flags — pick one, then adjust age, gender, diet, or regional preference below if you like.</p>
+        <div class="persona-grid" id="persona-grid"></div>
+        <div class="manual-form" id="persona-edit-panel" hidden style="margin-top:18px;">
+          <h2 class="section-title" id="persona-edit-title" style="font-size:1.05rem;margin-bottom:4px;">Edit profile</h2>
+          <p class="section-hint" style="margin-bottom:16px;">Biomarkers and health goal stay as measured — adjust everything else.</p>
+          <div class="form-grid">
+            <div class="field"><label for="pe-age">Age</label><input type="number" id="pe-age"></div>
+            <div class="field"><label for="pe-gender">Gender</label>
+              <select id="pe-gender"><option value="female">Female</option><option value="male">Male</option><option value="other">Other</option></select>
+            </div>
+            <div class="field"><label for="pe-region">Regional food preference</label>
+              <select id="pe-region">
+                <option value="north">North Indian</option>
+                <option value="south">South Indian</option>
+                <option value="east">East Indian</option>
+                <option value="west">West Indian</option>
+                <option value="any">No preference</option>
+              </select>
+            </div>
+            <div class="field"><label for="pe-diet">Diet type</label>
+              <select id="pe-diet">
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="eggetarian">Eggetarian</option>
+                <option value="non_vegetarian">Non-vegetarian</option>
+                <option value="jain">Jain</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="panel-manual" hidden>
+        <h2 class="section-title">Enter your details</h2>
+        <p class="section-hint">Prefilled with an example — edit any field before generating your plan.</p>
+        <form class="manual-form" id="manual-form">
+          <div class="form-grid">
+            <div class="field"><label for="f-hba1c">HbA1c (%)</label><input type="number" step="0.1" id="f-hba1c"><span class="hint">Normal: below 5.7</span></div>
+            <div class="field"><label for="f-ldl">LDL cholesterol (mg/dL)</label><input type="number" id="f-ldl"><span class="hint">Normal: below 100</span></div>
+            <div class="field"><label for="f-vitd">Vitamin D (ng/mL)</label><input type="number" id="f-vitd"><span class="hint">Normal: 30 or above</span></div>
+            <div class="field"><label for="f-tsh">TSH (µIU/mL)</label><input type="number" step="0.1" id="f-tsh"><span class="hint">Normal: 0.4 – 4.5</span></div>
+            <div class="field"><label for="f-iron">Iron / ferritin (ng/mL)</label><input type="number" id="f-iron"><span class="hint">Normal: 30 or above</span></div>
+            <div class="field">
+              <label for="f-diet">Dietary preference</label>
+              <select id="f-diet">
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="eggetarian">Eggetarian</option>
+                <option value="non_vegetarian">Non-vegetarian</option>
+                <option value="jain">Jain</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-region">Regional preference</label>
+              <select id="f-region">
+                <option value="north">North Indian</option>
+                <option value="south">South Indian</option>
+                <option value="east">East Indian</option>
+                <option value="west">West Indian</option>
+                <option value="any">No preference</option>
+              </select>
+            </div>
+            <div class="field field-full">
+              <label for="f-goal">Health goal</label>
+              <select id="f-goal">
+                <option value="wellness">General wellness</option>
+                <option value="blood_sugar">Blood sugar control</option>
+                <option value="heart_health">Heart health</option>
+                <option value="weight_loss">Weight loss</option>
+                <option value="muscle_gain">Muscle gain</option>
+                <option value="hormonal_balance">Hormonal balance (e.g. PCOS)</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="divider"></div>
+      <h2 class="section-title" style="font-size:1.1rem;">Plan length</h2>
+      <div class="plan-toggle">
+        <button id="toggle-weekly" class="active">Weekly (7 days)</button>
+        <button id="toggle-monthly">Monthly (4 weeks)</button>
+      </div>
+      <div class="generate-row">
+        <button class="btn btn-primary" id="btn-generate">Generate my plan</button>
+        <span id="generate-hint" style="font-size:.85rem;color:var(--ink-faint);">Pick a profile above first</span>
+      </div>
+    </section>
+
+    <!-- ANALYZING -->
+    <section id="screen-analyzing" class="screen" hidden>
+      <div class="analyzing">
+        <h2>Reading your profile…</h2>
+        <ul class="checklist" id="checklist"></ul>
+        <div class="analyzing-actions"><button class="btn btn-secondary" id="btn-skip">Skip</button></div>
+      </div>
+    </section>
+
+    <!-- PLAN -->
+    <section id="screen-plan" class="screen" hidden>
+      <div class="plan-header">
+        <div>
+          <h2 class="section-title" style="margin-bottom:8px;">Your plan</h2>
+          <div class="profile-chips" id="profile-chips"></div>
+        </div>
+      </div>
+      <div class="rationale">
+        <h3>Why this plan</h3>
+        <ul id="rationale-list"></ul>
+      </div>
+      <div id="week-tabs" class="week-tabs" hidden></div>
+      <div class="grid-wrap">
+        <table class="plan-grid">
+          <thead><tr id="grid-head"></tr></thead>
+          <tbody id="grid-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="disclaimer">Prototype only — illustrative meal suggestions generated by rule-based logic, not medical or dietary advice.</footer>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" id="modal">
+    <button class="modal-close" id="modal-close" aria-label="Close recipe">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var DAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var SLOTS = [
+    {key:"breakfast", label:"Breakfast", time:"7:30 AM"},
+    {key:"lunch", label:"Lunch", time:"1:00 PM"},
+    {key:"snack", label:"Snack", time:"4:30 PM"},
+    {key:"dinner", label:"Dinner", time:"8:00 PM"}
+  ];
+
+  var DIET_LABELS = {vegetarian:"Vegetarian", vegan:"Vegan", eggetarian:"Eggetarian", non_vegetarian:"Non-vegetarian", jain:"Jain"};
+  var GENDER_LABELS = {female:"Female", male:"Male", other:"Other"};
+  var REGION_LABELS = {north:"North Indian", south:"South Indian", east:"East Indian", west:"West Indian", any:"No regional preference"};
+  var GOAL_LABELS = {
+    wellness:"General wellness", blood_sugar:"Blood sugar control", heart_health:"Heart health",
+    weight_loss:"Weight loss", muscle_gain:"Muscle gain", hormonal_balance:"Hormonal balance"
+  };
+  var GOAL_SENTENCES = {
+    wellness:"balancing your plate to the ICMR-NIN My Plate model",
+    blood_sugar:"leaning on low-glycemic grains and pulses to support blood sugar control",
+    heart_health:"cutting back on fried and ghee-heavy dishes to support heart health",
+    weight_loss:"capping portions and raising the protein-to-carb ratio for weight loss",
+    muscle_gain:"raising protein across meals to support muscle gain",
+    hormonal_balance:"favouring low-GI, high-fibre, protein-forward meals for hormonal balance"
+  };
+  var FLAG_LABELS = {
+    glucose_high:"Blood sugar reading above the healthy range — prioritising low-glycemic Indian staples and fibre",
+    ldl_high:"LDL cholesterol above the healthy range — reducing fried and ghee-heavy dishes",
+    vitd_low:"Vitamin D below the healthy range — weighting toward vitamin D sources your diet allows",
+    iron_low:"Iron/ferritin below the healthy range — adding iron-rich pulses, millets and greens",
+    thyroid:"TSH outside the healthy range — keeping iodine intake steady and raw cruciferous vegetables in moderation"
+  };
+  var FLAG_TAGS = {
+    glucose_high:["low_gi","high_fiber"],
+    ldl_high:["low_fat","high_fiber"],
+    vitd_low:["vitd_rich"],
+    iron_low:["iron_rich"]
+  };
+  var GOAL_TAGS = {
+    wellness:[], blood_sugar:["low_gi","high_fiber"], heart_health:["low_fat","high_fiber"],
+    weight_loss:["weight_loss_friendly","low_fat"], muscle_gain:["muscle_gain_friendly","high_protein"],
+    hormonal_balance:["low_gi","high_fiber","high_protein"]
+  };
+  var TAG_REASONS = {
+    low_gi:"has a low glycemic index", high_fiber:"is high in fibre", high_protein:"is protein-rich",
+    iron_rich:"is a good source of iron", vitd_rich:"contributes vitamin D", low_fat:"is lighter on fat",
+    weight_loss_friendly:"is portioned for a calorie-conscious goal", muscle_gain_friendly:"is built to support muscle gain"
+  };
+
+  var RECIPES = [
+    {id:"b1",slot:"breakfast",name:"Moong Dal Chilla",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["high_protein","low_gi","weight_loss_friendly"],cal:220,protein:12,carbs:28,fat:6,prep:"20 min",
+     ingredients:["1 cup split yellow moong dal, soaked 3 hrs","1 green chilli","1/2 inch ginger","1/4 tsp cumin seeds","2 tbsp chopped onion","Salt to taste","1 tsp oil for cooking"],
+     steps:["Grind soaked moong dal with ginger, green chilli, and a little water into a smooth, pourable batter.","Stir in cumin seeds, chopped onion, and salt.","Heat a tawa, pour a ladle of batter and spread thin like a dosa.","Drizzle a little oil on the edges, cook both sides until golden, and serve hot."]},
+    {id:"b2",slot:"breakfast",name:"Ragi Dosa",region:"south",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["low_gi","iron_rich","high_fiber"],cal:190,protein:6,carbs:32,fat:4,prep:"15 min (batter made ahead)",
+     ingredients:["1 cup ragi (finger millet) flour","1/2 cup rice flour","2 tbsp water or curd","1/4 tsp cumin seeds","1 green chilli, chopped","Salt to taste","Oil for the tawa"],
+     steps:["Whisk ragi flour, rice flour, cumin, chilli, and salt with water into a thin, lump-free batter.","Rest the batter for 10 minutes.","Heat a tawa, pour the batter in a thin circular motion from the edge inward.","Drizzle oil, cook until crisp and lightly browned, then serve."]},
+    {id:"b3",slot:"breakfast",name:"Poha with Peanuts",region:"west",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["iron_rich","weight_loss_friendly"],cal:240,protein:6,carbs:38,fat:8,prep:"15 min",
+     ingredients:["1.5 cups thick poha","2 tbsp peanuts","1 small potato, diced","1/2 tsp mustard seeds","1 small onion, chopped","A pinch of turmeric","Juice of 1/2 lemon","Coriander leaves"],
+     steps:["Rinse poha in a colander until soft; drain well.","Heat oil, splutter mustard seeds, fry peanuts and diced potato until golden.","Add onion, turmeric, and salt; sauté until softened.","Fold in the poha, cook 2 minutes, finish with lemon juice and coriander."]},
+    {id:"b4",slot:"breakfast",name:"Egg Bhurji with Multigrain Roti",region:"north",wide:true,hasMeatFish:false,hasEgg:true,vegan:false,jainSafe:false,
+     tags:["high_protein","vitd_rich"],cal:260,protein:16,carbs:24,fat:12,prep:"15 min",
+     ingredients:["2 eggs","1 small onion, chopped","1 small tomato, chopped","1 green chilli","1/4 tsp turmeric","2 multigrain rotis","Coriander leaves"],
+     steps:["Heat oil, sauté onion, chilli, and tomato until soft.","Add turmeric and salt, then pour in beaten eggs.","Scramble on medium heat until just set.","Garnish with coriander and serve with warm rotis."]},
+    {id:"b5",slot:"breakfast",name:"Sattu Paratha",region:"east",hasMeatFish:false,hasEgg:false,vegan:false,jainSafe:true,
+     tags:["high_protein","high_fiber","iron_rich"],cal:280,protein:11,carbs:34,fat:10,prep:"30 min",
+     ingredients:["1 cup roasted chana sattu","2 cups whole wheat flour, for dough","1 tsp mustard oil + ajwain","1/2 inch ginger, grated","1 green chilli, chopped","A squeeze of lemon","Ghee for roasting"],
+     steps:["Mix sattu with mustard oil, ajwain, ginger, chilli, lemon juice, and a little water into a thick paste.","Make wheat dough into balls and stuff each with the sattu filling.","Roll gently into parathas without letting the filling spill.","Roast on a hot tawa with ghee until golden on both sides."]},
+    {id:"b6",slot:"breakfast",name:"Idli with Sambar",region:"south",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["low_gi","low_fat","high_fiber"],cal:210,protein:8,carbs:40,fat:2,prep:"20 min (batter fermented ahead)",
+     ingredients:["4 steamed idlis","1/2 cup toor dal, cooked","Mixed vegetables: drumstick, pumpkin, carrot","1 tsp sambar powder","A pinch of asafoetida","Tamarind pulp","Curry leaves and mustard seeds"],
+     steps:["Simmer cooked toor dal with vegetables, tamarind pulp, and sambar powder until tender.","Temper with mustard seeds, curry leaves, and asafoetida; stir in.","Steam the idlis until fluffy.","Serve idlis hot with a generous ladle of sambar."]},
+    {id:"b7",slot:"breakfast",name:"Handvo",region:"west",hasMeatFish:false,hasEgg:false,vegan:false,jainSafe:false,
+     tags:["high_protein","high_fiber"],cal:250,protein:9,carbs:30,fat:10,prep:"40 min (batter fermented ahead)",
+     ingredients:["1 cup mixed lentil-rice batter","1/4 cup grated bottle gourd","1/4 cup grated carrot","2 tbsp curd","1/2 tsp eno fruit salt","Mustard seeds, sesame seeds, curry leaves"],
+     steps:["Mix the fermented batter with grated vegetables and curd.","Just before baking, stir in eno and pour into a greased pan.","Temper mustard seeds, sesame, and curry leaves in oil and pour over the batter.","Bake or steam until a skewer comes out clean, then cut into squares."]},
+    {id:"b8",slot:"breakfast",name:"Methi Thepla",region:"west",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["high_fiber","low_fat"],cal:200,protein:6,carbs:30,fat:6,prep:"20 min",
+     ingredients:["1 cup whole wheat flour","1/2 cup fresh fenugreek (methi) leaves, chopped","2 tbsp besan","1/4 tsp turmeric, 1/2 tsp red chilli powder","1 tsp oil, plus more for roasting","Salt to taste"],
+     steps:["Mix wheat flour, besan, chopped methi leaves, turmeric, chilli powder, and salt.","Add oil and enough water to knead into a soft dough.","Roll into thin rounds and roast on a hot tawa with a little oil until golden spots appear on both sides.","Serve warm, plain or with curd and pickle."]},
+    {id:"b9",slot:"breakfast",name:"Khakhra with Peanut Chutney",region:"west",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["low_fat","weight_loss_friendly"],cal:180,protein:5,carbs:30,fat:4,prep:"10 min",
+     ingredients:["3 whole wheat khakhras (thin roasted crackers)","2 tbsp roasted peanut-sesame chutney powder","A drizzle of oil, optional"],
+     steps:["Dry roast the khakhras lightly if not already crisp.","Blend roasted peanuts, sesame seeds, dried red chilli, and salt into a coarse chutney.","Serve the khakhras with the chutney on the side or spread thin over each piece.","Eat immediately for the best crunch."]},
+    {id:"b10",slot:"breakfast",name:"Sabudana Khichdi",region:"west",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["high_fiber"],cal:280,protein:6,carbs:42,fat:10,prep:"15 min (sabudana soaked overnight)",
+     ingredients:["1.5 cups sabudana (tapioca pearls), soaked overnight","2 tbsp roasted peanuts, coarsely crushed","1 tsp cumin seeds","1 green chilli, chopped","Juice of 1/2 lemon","Coriander leaves"],
+     steps:["Drain the soaked sabudana well so the pearls stay separate.","Heat oil, splutter cumin seeds and green chilli.","Add the sabudana and crushed peanuts, tossing gently on low heat until the pearls turn translucent.","Finish with lemon juice, salt, and coriander; serve warm."]},
+
+    {id:"l1",slot:"lunch",name:"Rajma Chawal",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["high_protein","high_fiber","muscle_gain_friendly"],cal:380,protein:15,carbs:60,fat:8,prep:"40 min (soaked overnight)",
+     ingredients:["1 cup rajma, soaked overnight","1 onion, 2 tomatoes, pureed","1 tbsp ginger-garlic paste","1 tsp rajma masala","1 cup steamed rice","Coriander leaves"],
+     steps:["Pressure-cook soaked rajma until soft, about 5-6 whistles.","Sauté onion until golden, add ginger-garlic paste and tomato puree, cook until oil separates.","Add rajma masala and the cooked rajma with its stock; simmer 15 minutes.","Serve hot over steamed rice, garnished with coriander."]},
+    {id:"l2",slot:"lunch",name:"Sambar Rice with Vegetables",region:"south",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["low_gi","high_fiber"],cal:340,protein:10,carbs:58,fat:6,prep:"30 min",
+     ingredients:["1 cup cooked rice","1/2 cup toor dal, cooked","Mixed vegetables: drumstick, brinjal, pumpkin","1.5 tbsp sambar powder","Tamarind pulp","Mustard seeds, curry leaves, asafoetida"],
+     steps:["Cook vegetables with tamarind pulp and sambar powder until tender.","Mash in the cooked dal and simmer to a thick, pourable consistency.","Temper with mustard seeds, curry leaves, and asafoetida; pour over the sambar.","Mix with steamed rice and serve hot."]},
+    {id:"l3",slot:"lunch",name:"Chettinad Chicken with Brown Rice",region:"south",hasMeatFish:true,hasEgg:false,vegan:false,jainSafe:false,
+     tags:["high_protein","muscle_gain_friendly"],cal:420,protein:34,carbs:38,fat:14,prep:"45 min",
+     ingredients:["300g chicken, curry cut","2 tbsp Chettinad masala","1 onion, sliced","2 tomatoes, chopped","1 cup cooked brown rice","Curry leaves"],
+     steps:["Marinate chicken with a little turmeric and salt.","Sauté onion until deep golden, add ginger-garlic paste and Chettinad masala, cook until fragrant.","Add tomatoes and chicken; cook covered until tender and the gravy thickens.","Serve hot with brown rice."]},
+    {id:"l4",slot:"lunch",name:"Macher Jhol with Rice",region:"east",hasMeatFish:true,hasEgg:false,vegan:false,jainSafe:false,
+     tags:["high_protein","vitd_rich","low_fat"],cal:360,protein:28,carbs:40,fat:10,prep:"35 min",
+     ingredients:["2 pieces rohu or katla fish","1 potato, cut into wedges","1 tsp panch phoron","1/2 tsp turmeric","1 tbsp mustard oil","1 cup steamed rice"],
+     steps:["Shallow-fry the fish lightly in mustard oil and set aside.","Temper panch phoron in the same oil, add potato wedges and turmeric, and sauté briefly.","Add water for a thin gravy, simmer until the potato is cooked.","Slide the fish back in, simmer 5 minutes, and serve over rice."]},
+    {id:"l5",slot:"lunch",name:"Undhiyu with Bajra Roti",region:"west",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["high_fiber","low_fat"],cal:310,protein:9,carbs:45,fat:9,prep:"50 min",
+     ingredients:["Surti papdi (flat beans)","Purple yam and sweet potato","Brinjal, chopped","1/4 cup green garlic-coriander-peanut masala","2 bajra rotis"],
+     steps:["Toss all the vegetables with the green masala and a little oil.","Layer them in a heavy pot and cook covered on low heat, stirring occasionally, until tender.","Adjust salt and finish with a squeeze of lemon.","Serve warm with bajra roti."]},
+    {id:"l6",slot:"lunch",name:"Lauki Chana Dal",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["low_gi","high_fiber","weight_loss_friendly"],cal:260,protein:12,carbs:34,fat:6,prep:"30 min",
+     ingredients:["1 cup bottle gourd, diced","1/2 cup chana dal, soaked","1/2 tsp cumin seeds","1/4 tsp turmeric","1 green chilli","Coriander leaves"],
+     steps:["Pressure-cook chana dal with turmeric until soft but holding shape.","Temper cumin seeds and chilli in oil, add diced lauki, and sauté briefly.","Add the cooked dal and a little water; simmer until the lauki is tender.","Finish with coriander and serve with roti or rice."]},
+    {id:"l7",slot:"lunch",name:"Curd Rice with Pomegranate",region:"south",wide:true,hasMeatFish:false,hasEgg:false,vegan:false,jainSafe:true,
+     tags:["low_fat","low_gi"],cal:280,protein:8,carbs:42,fat:8,prep:"15 min",
+     ingredients:["1 cup cooked rice, cooled","1 cup fresh curd","2 tbsp pomegranate seeds","1/2 tsp mustard seeds","1 dried red chilli, curry leaves","A pinch of grated ginger"],
+     steps:["Mash the cooked rice slightly and mix in the curd until creamy.","Temper mustard seeds, dried red chilli, and curry leaves in a little oil.","Stir the tempering and grated ginger into the curd rice.","Top with pomegranate seeds before serving."]},
+    {id:"l8",slot:"lunch",name:"Tandoori Chicken with Mint Chutney",region:"north",hasMeatFish:true,hasEgg:false,vegan:false,jainSafe:false,
+     tags:["high_protein","low_fat","muscle_gain_friendly"],cal:300,protein:34,carbs:6,fat:12,prep:"30 min (plus 2 hr marinade)",
+     ingredients:["300g chicken, on the bone or breast","1/2 cup thick curd, for the marinade","1 tbsp tandoori masala","1 tsp ginger-garlic paste","1 tsp lemon juice","Mint-coriander chutney, to serve"],
+     steps:["Marinate the chicken in curd, tandoori masala, ginger-garlic paste, and lemon juice for at least 2 hours.","Skewer or arrange the chicken and roast in a hot oven or tandoor until charred at the edges.","Baste once with a little oil halfway through for extra colour.","Rest a few minutes, then serve hot with mint-coriander chutney."]},
+    {id:"l9",slot:"lunch",name:"Chicken Curry with Rice",region:"north",wide:true,hasMeatFish:true,hasEgg:false,vegan:false,jainSafe:false,
+     tags:["high_protein","muscle_gain_friendly"],cal:400,protein:30,carbs:42,fat:16,prep:"40 min",
+     ingredients:["300g chicken, curry cut","1 onion, 2 tomatoes, pureed","1 tbsp ginger-garlic paste","1 tsp garam masala, 1/2 tsp turmeric","1 cup steamed rice"],
+     steps:["Sauté onion until golden, add ginger-garlic paste and cook until fragrant.","Add tomato puree, turmeric, and garam masala; cook until the oil separates.","Add chicken and a little water, cover and simmer until the chicken is cooked through.","Serve hot over steamed rice."]},
+    {id:"l10",slot:"lunch",name:"Kadhi Chawal",region:"west",wide:true,hasMeatFish:false,hasEgg:false,vegan:false,jainSafe:true,
+     tags:["low_fat","weight_loss_friendly"],cal:250,protein:7,carbs:34,fat:8,prep:"25 min",
+     ingredients:["1 cup curd, whisked","3 tbsp besan (gram flour)","1/2 tsp cumin seeds, a pinch of asafoetida","1/4 tsp turmeric","1 cup steamed rice","Curry leaves, optional"],
+     steps:["Whisk curd with besan and a little water until smooth and lump-free.","Bring to a gentle simmer, stirring continuously so it does not split, until it thickens slightly.","Temper cumin seeds and asafoetida in a little oil and stir into the kadhi.","Serve hot over steamed rice."]},
+    {id:"l11",slot:"lunch",name:"Gujarati Dal with Rice",region:"west",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["high_fiber","low_gi"],cal:260,protein:10,carbs:38,fat:6,prep:"30 min",
+     ingredients:["1/2 cup toor dal, cooked soft","1 tsp jaggery, a small piece of kokum or a squeeze of lemon","1/4 tsp turmeric","Cumin and mustard seeds, curry leaves, and a pinch of hing for tempering","1 cup steamed rice"],
+     steps:["Mash the cooked dal and thin it with water to a pourable consistency.","Add turmeric, jaggery, and kokum (or lemon juice at the end) and simmer 10 minutes.","Temper mustard seeds, cumin, curry leaves, and hing in a little oil and stir in.","Serve hot over steamed rice."]},
+    {id:"l12",slot:"lunch",name:"Dimer Jhol (Bengali Egg Curry) with Rice",region:"east",hasMeatFish:false,hasEgg:true,vegan:false,jainSafe:false,
+     tags:["high_protein","vitd_rich"],cal:280,protein:14,carbs:30,fat:12,prep:"30 min",
+     ingredients:["4 eggs, boiled","1 potato, halved and lightly fried","1 onion, pureed","1 tsp panch phoron","1/2 tsp turmeric","1 cup steamed rice"],
+     steps:["Lightly fry the boiled eggs and potato until golden; set aside.","Temper panch phoron in oil, add pureed onion, and cook until soft.","Add turmeric and a little water to form a thin gravy; simmer until fragrant.","Slide in the eggs and potato, simmer 5 minutes, and serve over rice."]},
+
+    {id:"s1",slot:"snack",name:"Roasted Makhana",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["low_gi","low_fat","weight_loss_friendly"],cal:110,protein:4,carbs:16,fat:4,prep:"10 min",
+     ingredients:["1.5 cups makhana (fox nuts)","1 tsp ghee or oil","1/4 tsp roasted cumin powder","A pinch of black salt"],
+     steps:["Dry roast makhana on low heat until crisp, about 6-8 minutes.","Drizzle with ghee and toss to coat lightly.","Sprinkle roasted cumin powder and black salt.","Cool slightly for extra crunch before serving."]},
+    {id:"s2",slot:"snack",name:"Sprouts Chaat",region:"west",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["high_protein","high_fiber","iron_rich"],cal:160,protein:9,carbs:22,fat:3,prep:"15 min",
+     ingredients:["1.5 cups mixed sprouts, steamed","1 small onion, chopped","1 tomato, chopped","1/2 tsp chaat masala","Juice of 1/2 lemon","Coriander leaves"],
+     steps:["Steam the sprouts lightly until just tender, not mushy.","Toss with chopped onion, tomato, and coriander.","Sprinkle chaat masala and lemon juice.","Mix well and serve immediately for the best crunch."]},
+    {id:"s3",slot:"snack",name:"Sundal",region:"south",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["high_protein","high_fiber"],cal:150,protein:8,carbs:20,fat:4,prep:"15 min (chana pre-soaked)",
+     ingredients:["1.5 cups boiled kala chana or white chana","2 tbsp grated coconut","1/2 tsp mustard seeds","1 dried red chilli, curry leaves","A pinch of asafoetida"],
+     steps:["Temper mustard seeds, dried red chilli, curry leaves, and asafoetida in oil.","Add the boiled chana and toss to coat.","Stir in grated coconut and a little salt.","Serve warm as is."]},
+    {id:"s4",slot:"snack",name:"Dhokla",region:"west",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["low_fat","high_protein"],cal:140,protein:6,carbs:22,fat:3,prep:"25 min",
+     ingredients:["1 cup besan","1/2 tsp eno fruit salt","1/4 tsp turmeric","1 tsp lemon juice","Mustard seeds, sesame seeds, curry leaves, green chilli"],
+     steps:["Whisk besan with turmeric, lemon juice, salt, and water into a smooth, thick batter.","Stir in eno just before steaming; pour into a greased plate and steam 15 minutes.","Cool slightly, then cut into squares.","Temper mustard seeds, sesame, curry leaves, and chilli in oil, and pour over."]},
+    {id:"s5",slot:"snack",name:"Masala Chaas with Roasted Chana",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:false,jainSafe:true,
+     tags:["low_gi"],cal:120,protein:6,carbs:14,fat:3,prep:"10 min",
+     ingredients:["1 cup curd, whisked with water","1/4 tsp roasted cumin powder","Mint and coriander leaves","A pinch of black salt","2 tbsp roasted chana"],
+     steps:["Whisk curd with chilled water until smooth and frothy.","Stir in roasted cumin powder, black salt, and chopped mint and coriander.","Pour into a glass and chill briefly.","Serve with a small bowl of roasted chana on the side."]},
+    {id:"s6",slot:"snack",name:"Til-Gud Ladoo",region:"west",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["iron_rich"],cal:130,protein:3,carbs:18,fat:6,prep:"20 min",
+     ingredients:["1/2 cup sesame seeds","1/4 cup jaggery, grated","1 tsp oil","A pinch of cardamom powder"],
+     steps:["Dry roast sesame seeds until light golden and fragrant.","Melt jaggery with oil on low heat until it forms a soft ball when dropped in water.","Mix in the roasted sesame and cardamom powder, off the heat.","While still warm, shape into small ladoos and let them cool."]},
+    {id:"s7",slot:"snack",name:"Amla Murabba Bowl",region:"north",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["high_fiber"],cal:90,protein:1,carbs:22,fat:0,prep:"10 min",
+     ingredients:["3-4 pieces amla murabba","A few soaked almonds","A pinch of saunf (fennel seeds)"],
+     steps:["Serve chilled amla murabba pieces in a small bowl.","Add a few soaked, peeled almonds alongside.","Finish with a pinch of saunf.","Enjoy as a light mid-meal snack."]},
+    {id:"s8",slot:"snack",name:"Jhal Muri",region:"east",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["low_fat","weight_loss_friendly"],cal:170,protein:5,carbs:28,fat:5,prep:"10 min",
+     ingredients:["3 cups puffed rice (muri)","2 tbsp boiled chana","1 tbsp peanuts","1 small onion, finely chopped","1 green chilli, chopped","1 tsp mustard oil","Juice of 1/2 lemon"],
+     steps:["Combine puffed rice, boiled chana, and peanuts in a large bowl.","Add chopped onion and green chilli.","Drizzle mustard oil and lemon juice over the mix.","Toss everything together quickly and serve immediately while the puffed rice is still crisp."]},
+
+    {id:"d1",slot:"dinner",name:"Palak Paneer with Jowar Roti",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:false,jainSafe:true,
+     tags:["iron_rich","high_protein","low_gi"],cal:320,protein:16,carbs:26,fat:16,prep:"30 min",
+     ingredients:["2 cups spinach, blanched and pureed","150g paneer, cubed","1/2 inch ginger, 1 green chilli","1/4 tsp garam masala","2 jowar rotis"],
+     steps:["Blend blanched spinach with ginger and chilli into a smooth puree.","Heat a little oil, add the puree, and simmer 5 minutes.","Add paneer cubes and garam masala; simmer 3-4 minutes more.","Serve hot with jowar rotis."]},
+    {id:"d2",slot:"dinner",name:"Vegetable Khichdi",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["low_gi","low_fat"],cal:290,protein:11,carbs:48,fat:5,prep:"30 min",
+     ingredients:["1/2 cup rice","1/2 cup split moong dal","Mixed vegetables: peas, beans, carrot","1/2 tsp turmeric","1 tsp cumin seeds","1 tbsp oil"],
+     steps:["Wash rice and dal together; pressure-cook with vegetables, turmeric, and salt until soft.","Temper cumin seeds in oil.","Pour the tempering over the khichdi and mix well.","Serve hot, loosening with a little water if needed."]},
+    {id:"d3",slot:"dinner",name:"Bhindi Sabzi with Missi Roti",region:"north",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["high_fiber","low_gi"],cal:270,protein:9,carbs:36,fat:8,prep:"25 min",
+     ingredients:["250g bhindi, sliced","1/2 tsp cumin seeds","1/4 tsp turmeric, 1/2 tsp amchur","2 missi rotis"],
+     steps:["Heat oil, add cumin seeds, then the sliced bhindi.","Cook uncovered on medium heat, stirring occasionally, until no longer sticky.","Add turmeric, salt, and amchur; cook 2 more minutes.","Serve hot with missi roti."]},
+    {id:"d4",slot:"dinner",name:"Meen Kuzhambu with Red Rice",region:"south",hasMeatFish:true,hasEgg:false,vegan:false,jainSafe:false,
+     tags:["high_protein","vitd_rich","muscle_gain_friendly"],cal:380,protein:30,carbs:36,fat:12,prep:"35 min",
+     ingredients:["2 pieces seer fish or sardine","2 tbsp kuzhambu masala","Tamarind pulp","1 tomato, chopped","1 cup cooked red rice"],
+     steps:["Simmer tamarind pulp, tomato, and kuzhambu masala in oil until fragrant.","Add water to form a gravy and simmer 10 minutes.","Slide in the fish and simmer gently until just cooked through.","Serve with red rice."]},
+    {id:"d5",slot:"dinner",name:"Litti Chokha",region:"east",hasMeatFish:false,hasEgg:false,vegan:false,jainSafe:false,
+     tags:["high_protein","high_fiber","iron_rich"],cal:340,protein:12,carbs:44,fat:12,prep:"50 min",
+     ingredients:["1 cup sattu, spiced with ajwain and mustard oil","Whole wheat dough balls","Brinjal and potato, roasted and mashed","Garlic, green chilli, mustard oil"],
+     steps:["Stuff the dough balls with the spiced sattu filling and seal well.","Roast or bake the litti, turning occasionally, until firm and lightly charred.","Mash roasted brinjal and potato with garlic, chilli, and mustard oil for the chokha.","Dunk the litti in ghee if desired and serve with the chokha."]},
+    {id:"d6",slot:"dinner",name:"Paneer Bhurji with Multigrain Roti",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:false,jainSafe:true,
+     tags:["high_protein","muscle_gain_friendly"],cal:300,protein:18,carbs:22,fat:14,prep:"20 min",
+     ingredients:["200g paneer, crumbled","1 tomato, chopped","1/4 tsp turmeric, 1/2 tsp garam masala","2 multigrain rotis","Coriander leaves"],
+     steps:["Heat oil, sauté tomato until soft.","Add turmeric and garam masala, then the crumbled paneer.","Cook 3-4 minutes on medium heat, stirring gently.","Garnish with coriander and serve with rotis."]},
+    {id:"d7",slot:"dinner",name:"Moringa Sambar with Ragi Mudde",region:"south",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["iron_rich","high_fiber","low_gi"],cal:260,protein:9,carbs:40,fat:5,prep:"30 min",
+     ingredients:["1/2 cup toor dal, cooked","2 drumsticks, cut into pieces","1.5 tbsp sambar powder","Tamarind pulp","1 cup ragi mudde"],
+     steps:["Simmer drumstick pieces with tamarind pulp and sambar powder until tender.","Mash in the cooked dal and simmer to a thick consistency.","Temper with mustard seeds and curry leaves.","Serve hot alongside a ragi mudde."]},
+    {id:"d8",slot:"dinner",name:"Mushroom Palak",region:"north",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["vitd_rich","iron_rich"],cal:230,protein:10,carbs:18,fat:12,prep:"25 min",
+     ingredients:["200g button mushrooms, halved","2 cups spinach, pureed","1/2 inch ginger, 1 green chilli","1/4 tsp garam masala","1 tsp oil"],
+     steps:["Sauté mushrooms in oil until they release their water and turn golden.","Blend spinach with ginger and chilli into a smooth puree; add to the pan.","Simmer 5 minutes, season with garam masala and salt.","Serve hot with roti or rice."]},
+    {id:"d9",slot:"dinner",name:"Dal Dhokli",region:"west",hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:true,
+     tags:["high_protein","high_fiber"],cal:300,protein:12,carbs:46,fat:7,prep:"40 min",
+     ingredients:["1 cup toor dal, cooked","1 cup whole wheat flour, kneaded into a stiff dough","1/2 tsp turmeric, 1 tsp jaggery","Tamarind pulp, curry leaves","Mustard seeds and cumin for tempering"],
+     steps:["Roll the wheat dough thin and cut into small diamond-shaped dhoklis.","Simmer the cooked dal with turmeric, jaggery, and tamarind pulp until well flavoured.","Drop the dhoklis into the simmering dal and cook until they soften and thicken it.","Temper mustard seeds, cumin, and curry leaves in oil and pour over before serving."]},
+    {id:"d10",slot:"dinner",name:"Tawa Chicken",region:"north",hasMeatFish:true,hasEgg:false,vegan:false,jainSafe:false,
+     tags:["high_protein","low_fat","muscle_gain_friendly"],cal:280,protein:32,carbs:8,fat:12,prep:"30 min",
+     ingredients:["300g boneless chicken, thin-sliced","1 tsp ginger-garlic paste","1/2 tsp turmeric, 1 tsp garam masala","1 tsp oil","1 onion and 1 capsicum, sliced","Lemon wedges, to serve"],
+     steps:["Marinate the chicken slices with ginger-garlic paste, turmeric, and garam masala for 20 minutes.","Heat a tawa or flat pan with just a teaspoon of oil.","Cook the chicken with sliced onion and capsicum on high heat, tossing often, until charred and cooked through.","Finish with a squeeze of lemon and serve hot."]},
+    {id:"d11",slot:"dinner",name:"Egg Curry with Rice",region:"north",wide:true,hasMeatFish:false,hasEgg:true,vegan:false,jainSafe:false,
+     tags:["high_protein","vitd_rich"],cal:320,protein:18,carbs:34,fat:14,prep:"30 min",
+     ingredients:["4 eggs, boiled and halved","1 onion, 2 tomatoes, pureed","1 tsp ginger-garlic paste","1/2 tsp turmeric, 1 tsp garam masala","1 cup steamed rice"],
+     steps:["Sauté onion until golden, add ginger-garlic paste, then tomato puree, turmeric, and garam masala.","Cook the masala until the oil separates.","Add a little water to form a gravy, then slide in the boiled eggs and simmer 5 minutes.","Serve hot over steamed rice."]},
+    {id:"d12",slot:"dinner",name:"Chana Masala with Rice",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["high_protein","high_fiber","weight_loss_friendly"],cal:320,protein:13,carbs:48,fat:8,prep:"35 min",
+     ingredients:["1.5 cups boiled chickpeas (chana)","1 onion, 2 tomatoes, pureed","1 tbsp chana masala powder","1 tsp ginger-garlic paste","1 cup steamed rice or 2 rotis"],
+     steps:["Sauté onion until golden, add ginger-garlic paste and cook until fragrant.","Add tomato puree and chana masala powder; cook until the oil separates.","Add the boiled chickpeas and a little water; simmer 10-12 minutes until the gravy thickens.","Serve hot with rice or roti."]},
+    {id:"d13",slot:"dinner",name:"Moong Dal Palak",region:"north",wide:true,hasMeatFish:false,hasEgg:false,vegan:true,jainSafe:false,
+     tags:["iron_rich","high_protein","low_gi"],cal:240,protein:12,carbs:28,fat:6,prep:"25 min",
+     ingredients:["1/2 cup moong dal, cooked soft","1.5 cups spinach, chopped","1/2 tsp cumin seeds","1/4 tsp turmeric","1 tomato, chopped","1 tsp oil, for tempering"],
+     steps:["Cook the chopped spinach into the soft dal and simmer 5 minutes.","Temper cumin seeds in oil, add chopped tomato, and cook until soft.","Pour the tempering over the dal and stir well.","Simmer 2-3 minutes and serve hot with rice or roti."]}
+  ];
+
+  var PERSONAS = [
+    {id:"anjali", name:"Anjali", age:34, gender:"female", city:"Bengaluru", diet:"vegetarian", region:"south", goal:"blood_sugar",
+     bio:{hba1c:6.1, ldl:98, vitd:32, tsh:2.1, iron:45}},
+    {id:"rohan", name:"Rohan", age:41, gender:"male", city:"Delhi", diet:"non_vegetarian", region:"north", goal:"heart_health",
+     bio:{hba1c:5.4, ldl:162, vitd:34, tsh:2.8, iron:60}},
+    {id:"meera", name:"Meera", age:29, gender:"female", city:"Mumbai", diet:"vegan", region:"west", goal:"wellness",
+     bio:{hba1c:5.2, ldl:90, vitd:14, tsh:2.0, iron:18}},
+    {id:"suresh", name:"Suresh", age:52, gender:"male", city:"Kolkata", diet:"eggetarian", region:"east", goal:"weight_loss",
+     bio:{hba1c:5.6, ldl:110, vitd:31, tsh:6.8, iron:50}},
+    {id:"priya", name:"Priya", age:26, gender:"female", city:"Ahmedabad", diet:"jain", region:"west", goal:"hormonal_balance",
+     bio:{hba1c:5.8, ldl:105, vitd:33, tsh:3.0, iron:40}},
+    {id:"karthik", name:"Karthik", age:31, gender:"male", city:"Chennai", diet:"non_vegetarian", region:"south", goal:"muscle_gain",
+     bio:{hba1c:5.1, ldl:85, vitd:42, tsh:1.8, iron:70}}
+  ];
+
+  var state = {mode:null, planLength:"weekly", selectedPersonaId:null, profile:null};
+
+  function $(sel){return document.querySelector(sel);}
+  function $all(sel){return document.querySelectorAll(sel);}
+
+  function showScreen(id){
+    $all(".screen").forEach(function(s){s.hidden = (s.id !== id);});
+    $("#start-over-btn").hidden = (id === "screen-start");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  function deriveFlags(bio){
+    var flags = [];
+    if(bio.hba1c >= 5.7) flags.push("glucose_high");
+    if(bio.ldl >= 130) flags.push("ldl_high");
+    if(bio.vitd < 30) flags.push("vitd_low");
+    if(bio.tsh > 4.5) flags.push("thyroid");
+    if(bio.iron < 30) flags.push("iron_low");
+    return flags;
+  }
+
+  function isDietCompatible(r, diet){
+    if(diet === "non_vegetarian") return true;
+    if(r.hasMeatFish) return false;
+    if(diet === "eggetarian") return true;
+    if(r.hasEgg) return false;
+    if(diet === "vegetarian") return true;
+    if(diet === "vegan") return r.vegan;
+    if(diet === "jain") return r.jainSafe;
+    return true;
+  }
+
+  function hashStr(str){
+    var h = 0;
+    for(var i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) | 0; }
+    return Math.abs(h);
+  }
+  function seededRandom(str){ return (hashStr(str) % 1000) / 1000; }
+
+  function activeTagSet(flags, goal){
+    var tags = {};
+    flags.forEach(function(f){ (FLAG_TAGS[f]||[]).forEach(function(t){ tags[t]=true; }); });
+    (GOAL_TAGS[goal]||[]).forEach(function(t){ tags[t]=true; });
+    return tags;
+  }
+
+  function scoreRecipe(r, profile, tagSet, seed){
+    var score = 0;
+    r.tags.forEach(function(t){ if(tagSet[t]) score += 3; });
+    if(profile.region !== "any" && r.region === profile.region) score += 6;
+    score += seededRandom(seed + r.id) * 0.9;
+    return score;
+  }
+
+  // A dish native to another region only ever appears if it is explicitly
+  // "wide" (genuinely eaten pan-India, e.g. rajma-chawal, khichdi) — a
+  // region-specific, iconic dish (e.g. ragi mudde, litti chokha) never
+  // shows up outside its home region, even as filler.
+  function buildPools(profile){
+    var flags = profile.flags;
+    var tagSet = activeTagSet(flags, profile.goal);
+    var seed = profile.diet + "|" + profile.region + "|" + profile.goal + "|" + flags.join(",");
+    var pools = {};
+    SLOTS.forEach(function(slot){
+      var dietOk = RECIPES.filter(function(r){ return r.slot === slot.key && isDietCompatible(r, profile.diet); });
+      var candidates = dietOk;
+      if(profile.region !== "any"){
+        var regional = dietOk.filter(function(r){ return r.region === profile.region || r.wide; });
+        // Needs at least 4 options: with a rolling 7-day (or 28-day) week,
+        // spacing repeats 2+ days apart caps any single dish at floor(N/3)
+        // uses, so fewer than 4 distinct dishes can't cover every day without
+        // a forced clash — in that case widen to the full diet-compatible list.
+        if(regional.length >= 4) candidates = regional;
+      }
+      candidates.sort(function(a,b){ return scoreRecipe(b, profile, tagSet, seed) - scoreRecipe(a, profile, tagSet, seed); });
+      pools[slot.key] = candidates.slice(0, Math.max(4, Math.min(candidates.length, 8)));
+      if(pools[slot.key].length === 0) pools[slot.key] = candidates;
+    });
+    return pools;
+  }
+
+  // A meal plan is meant to be followed on repeat, so the week (or month)
+  // is scheduled as a ROLLING cycle, not a one-off strip — Sunday and the
+  // following Monday are treated as adjacent, exactly like any other two
+  // consecutive days. Plain "day % pool.length" cycling only happens to
+  // respect that wraparound for specific pool sizes (it breaks, for example,
+  // whenever pool.length is 5 or 6 against a 7-day week) so instead this
+  // places each day greedily, always preferring the best-scored dish that
+  // is still at least `minGap` days away — measured the short way around
+  // the circle — from every other day it's already used on.
+  function circularDistance(i, j, n){
+    var d = Math.abs(i - j);
+    return Math.min(d, n - d);
+  }
+
+  function scheduleRolling(pool, n, minGap){
+    var seq = new Array(n).fill(-1);
+    var usage = new Array(pool.length).fill(0);
+    for(var pos = 0; pos < n; pos++){
+      // At every day, try options least-used-so-far first (falling back to
+      // score order among ties) so a full, unused pool fills with distinct
+      // dishes before anything repeats at all.
+      var order = pool.map(function(_, idx){ return idx; });
+      order.sort(function(a,b){ return usage[a] !== usage[b] ? usage[a]-usage[b] : a-b; });
+
+      var chosen = -1;
+      for(var oi = 0; oi < order.length; oi++){
+        var k = order[oi];
+        var ok = true;
+        for(var p = 0; p < n; p++){
+          if(seq[p] === k && circularDistance(pos, p, n) < minGap){ ok = false; break; }
+        }
+        if(ok){ chosen = k; break; }
+      }
+      if(chosen === -1){
+        // Best effort: every option clashes somewhere (only possible if the
+        // pool is too small for this length) — pick whichever is least
+        // used and currently farthest from a repeat.
+        var bestK = 0, bestDist = -1;
+        for(var k2 = 0; k2 < pool.length; k2++){
+          var minD = n;
+          for(var p2 = 0; p2 < n; p2++){ if(seq[p2] === k2) minD = Math.min(minD, circularDistance(pos, p2, n)); }
+          if(minD > bestDist){ bestDist = minD; bestK = k2; }
+        }
+        chosen = bestK;
+      }
+      seq[pos] = chosen;
+      usage[chosen]++;
+    }
+    return seq.map(function(k){ return pool[k]; });
+  }
+
+  function generatePlan(profile){
+    var pools = buildPools(profile);
+    var weeksCount = profile.planLength === "monthly" ? 4 : 1;
+    var totalDays = weeksCount * 7;
+    var schedules = {};
+    SLOTS.forEach(function(slot){ schedules[slot.key] = scheduleRolling(pools[slot.key], totalDays, 3); });
+
+    var weeks = [];
+    for(var w=0; w<weeksCount; w++){
+      var week = [];
+      for(var d=0; d<7; d++){
+        var globalDay = w*7 + d;
+        var dayMeals = {};
+        SLOTS.forEach(function(slot){ dayMeals[slot.key] = schedules[slot.key][globalDay]; });
+        week.push({day:DAYS[d], meals:dayMeals});
+      }
+      weeks.push(week);
+    }
+    return {pools:pools, weeks:weeks};
+  }
+
+  function renderPersonaGrid(){
+    var grid = $("#persona-grid");
+    grid.innerHTML = "";
+    PERSONAS.forEach(function(p){
+      var flags = deriveFlags(p.bio);
+      var card = document.createElement("button");
+      card.type = "button";
+      card.className = "persona-card";
+      card.dataset.id = p.id;
+      var flagsHtml = flags.length
+        ? flags.map(function(f){ return '<span class="chip flag">'+f.replace("_"," ")+'</span>'; }).join("")
+        : '<span class="chip">all biomarkers normal</span>';
+      card.innerHTML =
+        '<div class="p-name">'+p.name+'</div>' +
+        '<div class="p-meta">'+p.age+' · '+p.city+' · '+DIET_LABELS[p.diet]+'</div>' +
+        '<div class="p-flags">'+flagsHtml+'<span class="chip goal">'+GOAL_LABELS[p.goal]+'</span></div>';
+      card.addEventListener("click", function(){ selectPersona(this.dataset.id); });
+      grid.appendChild(card);
+    });
+  }
+
+  function selectPersona(id){
+    var p = PERSONAS.filter(function(x){ return x.id === id; })[0];
+    if(!p) return;
+    state.selectedPersonaId = id;
+    $all(".persona-card").forEach(function(c){ c.classList.toggle("selected", c.dataset.id === id); });
+    $("#persona-edit-title").textContent = "Edit " + p.name + "'s profile";
+    $("#pe-age").value = p.age;
+    $("#pe-gender").value = p.gender;
+    $("#pe-region").value = p.region;
+    $("#pe-diet").value = p.diet;
+    $("#persona-edit-panel").hidden = false;
+    updateGenerateHint();
+  }
+
+  function updateGenerateHint(){
+    var hint = $("#generate-hint");
+    if(state.mode === "sample"){
+      hint.textContent = state.selectedPersonaId ? "" : "Pick a profile above first";
+    } else {
+      hint.textContent = "";
+    }
+  }
+
+  function setMode(mode){
+    state.mode = mode;
+    $("#tab-sample").classList.toggle("active", mode==="sample");
+    $("#tab-manual").classList.toggle("active", mode==="manual");
+    $("#panel-sample").hidden = mode !== "sample";
+    $("#panel-manual").hidden = mode !== "manual";
+    updateGenerateHint();
+  }
+
+  function goToProfile(mode){
+    showScreen("screen-profile");
+    setMode(mode);
+  }
+
+  function buildProfileFromState(){
+    if(state.mode === "sample"){
+      var p = PERSONAS.filter(function(x){ return x.id === state.selectedPersonaId; })[0];
+      if(!p) return null;
+      return {
+        label:p.name,
+        age: parseInt($("#pe-age").value, 10) || p.age,
+        gender: $("#pe-gender").value || p.gender,
+        diet: $("#pe-diet").value || p.diet,
+        region: $("#pe-region").value || p.region,
+        goal:p.goal, flags:deriveFlags(p.bio), planLength:state.planLength
+      };
+    } else {
+      var bio = {
+        hba1c: parseFloat($("#f-hba1c").value) || 0,
+        ldl: parseFloat($("#f-ldl").value) || 0,
+        vitd: parseFloat($("#f-vitd").value) || 0,
+        tsh: parseFloat($("#f-tsh").value) || 0,
+        iron: parseFloat($("#f-iron").value) || 0
+      };
+      return {
+        label:"You", diet:$("#f-diet").value, region:$("#f-region").value, goal:$("#f-goal").value,
+        flags:deriveFlags(bio), planLength:state.planLength
+      };
+    }
+  }
+
+  function runAnalyzing(profile){
+    showScreen("screen-analyzing");
+    var lines = ["Reading your biomarker panel…"];
+    if(profile.flags.length === 0){
+      lines.push("All tracked biomarkers within the healthy range — personalising from your goal and preferences.");
+    } else {
+      profile.flags.forEach(function(f){ if(FLAG_LABELS[f]) lines.push(FLAG_LABELS[f]); });
+    }
+    lines.push(GOAL_SENTENCES[profile.goal]);
+    lines.push("Filtering for a "+DIET_LABELS[profile.diet]+" diet, "+REGION_LABELS[profile.region]+" preference…");
+    lines.push("Building your "+(profile.planLength==="monthly" ? "four-week" : "seven-day")+" plan…");
+
+    var list = $("#checklist");
+    list.innerHTML = "";
+    var i = 0;
+    var timer;
+    function step(){
+      if(i >= lines.length){
+        clearTimeout(timer);
+        timer = setTimeout(function(){ renderPlanScreen(profile); }, 500);
+        return;
+      }
+      var li = document.createElement("li");
+      li.style.animationDelay = "0s";
+      li.innerHTML = '<span class="dot">✓</span><span>'+lines[i]+'</span>';
+      list.appendChild(li);
+      i++;
+      timer = setTimeout(step, 550);
+    }
+    step();
+
+    $("#btn-skip").onclick = function(){
+      clearTimeout(timer);
+      renderPlanScreen(profile);
+    };
+  }
+
+  function renderChips(profile){
+    var wrap = $("#profile-chips");
+    var demo = "";
+    if(profile.age){ demo += '<span class="chip">'+profile.age+' yrs</span>'; }
+    if(profile.gender && GENDER_LABELS[profile.gender]){ demo += '<span class="chip">'+GENDER_LABELS[profile.gender]+'</span>'; }
+    wrap.innerHTML = demo +
+      '<span class="chip">'+DIET_LABELS[profile.diet]+'</span>' +
+      '<span class="chip">'+REGION_LABELS[profile.region]+'</span>' +
+      '<span class="chip goal">'+GOAL_LABELS[profile.goal]+'</span>' +
+      '<span class="chip">'+(profile.planLength==="monthly"?"Monthly plan":"Weekly plan")+'</span>';
+  }
+
+  function renderRationale(profile){
+    var list = $("#rationale-list");
+    list.innerHTML = "";
+    var items = [];
+    if(profile.flags.length === 0){
+      items.push("All tracked biomarkers are within the healthy range, so this plan is shaped mainly by your goal and preferences.");
+    } else {
+      profile.flags.forEach(function(f){ if(FLAG_LABELS[f]) items.push(FLAG_LABELS[f]+"."); });
+    }
+    items.push("Goal — "+GOAL_SENTENCES[profile.goal]+".");
+    if(profile.region === "any"){
+      items.push("Built around a "+DIET_LABELS[profile.diet]+" diet, drawn from across India's regional cuisines since you set no regional preference.");
+    } else {
+      items.push("Built around a "+DIET_LABELS[profile.diet]+" diet, drawing on "+REGION_LABELS[profile.region]+" dishes first and only widely-eaten pan-India staples (like rajma-chawal or khichdi) as filler — never another region's specialty dish.");
+    }
+    items.forEach(function(t){
+      var li = document.createElement("li");
+      li.textContent = t;
+      list.appendChild(li);
+    });
+  }
+
+  var currentPlanData = null;
+  var currentProfile = null;
+
+  function renderPlanScreen(profile){
+    currentProfile = profile;
+    currentPlanData = generatePlan(profile);
+    state.profile = profile;
+    saveLastProfile();
+
+    renderChips(profile);
+    renderRationale(profile);
+
+    var weekTabs = $("#week-tabs");
+    if(profile.planLength === "monthly"){
+      weekTabs.hidden = false;
+      weekTabs.innerHTML = "";
+      for(var w=0; w<4; w++){
+        var btn = document.createElement("button");
+        btn.className = "week-tab" + (w===0 ? " active" : "");
+        btn.textContent = "Week " + (w+1);
+        btn.dataset.week = w;
+        btn.addEventListener("click", function(){
+          $all(".week-tab").forEach(function(b){ b.classList.remove("active"); });
+          this.classList.add("active");
+          renderGrid(parseInt(this.dataset.week, 10));
+        });
+        weekTabs.appendChild(btn);
+      }
+    } else {
+      weekTabs.hidden = true;
+      weekTabs.innerHTML = "";
+    }
+
+    renderGrid(0);
+    showScreen("screen-plan");
+  }
+
+  function renderGrid(weekIndex){
+    var head = $("#grid-head");
+    head.innerHTML = '<th class="slot-head">Meal</th>' + DAYS.map(function(d){ return "<th>"+d+"</th>"; }).join("");
+
+    var body = $("#grid-body");
+    body.innerHTML = "";
+    var week = currentPlanData.weeks[weekIndex];
+
+    SLOTS.forEach(function(slot){
+      var tr = document.createElement("tr");
+      var head_td = document.createElement("td");
+      head_td.className = "slot-head";
+      head_td.innerHTML = slot.label + '<span class="time">'+slot.time+'</span>';
+      tr.appendChild(head_td);
+
+      week.forEach(function(dayObj){
+        var recipe = dayObj.meals[slot.key];
+        var td = document.createElement("td");
+        var btn = document.createElement("button");
+        btn.className = "meal-card";
+        btn.innerHTML =
+          '<span class="m-name">'+recipe.name+'</span>' +
+          '<span class="m-meta"><span class="m-cal">'+recipe.cal+' kcal</span></span>';
+        btn.addEventListener("click", function(){ openModal(recipe); });
+        td.appendChild(btn);
+        tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+  }
+
+  function openModal(recipe){
+    var tagSet = activeTagSet(currentProfile.flags, currentProfile.goal);
+    var matched = recipe.tags.filter(function(t){ return tagSet[t]; }).map(function(t){ return TAG_REASONS[t]; });
+    var why = matched.length
+      ? "Chosen for your plan because it " + matched.join(", ") + ", and fits your " + DIET_LABELS[currentProfile.diet].toLowerCase() + " diet."
+      : "A balanced, ICMR-NIN-aligned choice that fits your " + DIET_LABELS[currentProfile.diet].toLowerCase() + " diet and " + REGION_LABELS[recipe.region].toLowerCase() + " roots.";
+
+    var body = $("#modal-body");
+    body.innerHTML =
+      '<h3>'+recipe.name+'</h3>' +
+      '<div class="m-region">'+REGION_LABELS[recipe.region]+' · '+recipe.prep+'</div>' +
+      '<div class="macro-row">' +
+        '<div class="macro"><span class="v">'+recipe.cal+'</span><span class="l">kcal</span></div>' +
+        '<div class="macro"><span class="v">'+recipe.protein+'g</span><span class="l">protein</span></div>' +
+        '<div class="macro"><span class="v">'+recipe.carbs+'g</span><span class="l">carbs</span></div>' +
+        '<div class="macro"><span class="v">'+recipe.fat+'g</span><span class="l">fat</span></div>' +
+      '</div>' +
+      '<div class="why-box">'+why+'</div>' +
+      '<h4>Ingredients</h4><ul>'+recipe.ingredients.map(function(i){ return "<li>"+i+"</li>"; }).join("")+'</ul>' +
+      '<h4>Method</h4><ol>'+recipe.steps.map(function(s){ return "<li>"+s+"</li>"; }).join("")+'</ol>';
+
+    $("#modal-backdrop").hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal(){
+    $("#modal-backdrop").hidden = true;
+    document.body.style.overflow = "";
+  }
+
+  function saveLastProfile(){
+    try{
+      localStorage.setItem("annapurna_last_profile", JSON.stringify({mode:state.mode, personaId:state.selectedPersonaId, planLength:state.planLength}));
+    }catch(e){}
+  }
+  function loadLastProfile(){
+    try{
+      var raw = localStorage.getItem("annapurna_last_profile");
+      return raw ? JSON.parse(raw) : null;
+    }catch(e){ return null; }
+  }
+
+  function init(){
+    renderPersonaGrid();
+
+    var last = loadLastProfile();
+    if(last && last.mode === "sample" && last.personaId){
+      var p = PERSONAS.filter(function(x){ return x.id === last.personaId; })[0];
+      if(p){
+        var btn = $("#btn-continue");
+        btn.hidden = false;
+        btn.textContent = "Continue as " + p.name + " (" + DIET_LABELS[p.diet] + " · " + GOAL_LABELS[p.goal] + ")";
+        btn.addEventListener("click", function(){
+          state.planLength = last.planLength || "weekly";
+          $("#toggle-weekly").classList.toggle("active", state.planLength==="weekly");
+          $("#toggle-monthly").classList.toggle("active", state.planLength==="monthly");
+          goToProfile("sample");
+          selectPersona(p.id);
+        });
+      }
+    }
+
+    $("#btn-sample").addEventListener("click", function(){ goToProfile("sample"); });
+    $("#btn-manual").addEventListener("click", function(){ goToProfile("manual"); });
+    $("#tab-sample").addEventListener("click", function(){ setMode("sample"); });
+    $("#tab-manual").addEventListener("click", function(){ setMode("manual"); });
+
+    $("#f-hba1c").value = "5.9"; $("#f-ldl").value = "145"; $("#f-vitd").value = "22";
+    $("#f-tsh").value = "3.1"; $("#f-iron").value = "34";
+    $("#f-diet").value = "vegetarian"; $("#f-region").value = "north"; $("#f-goal").value = "wellness";
+
+    $("#toggle-weekly").addEventListener("click", function(){
+      state.planLength = "weekly";
+      this.classList.add("active"); $("#toggle-monthly").classList.remove("active");
+    });
+    $("#toggle-monthly").addEventListener("click", function(){
+      state.planLength = "monthly";
+      this.classList.add("active"); $("#toggle-weekly").classList.remove("active");
+    });
+
+    $("#btn-generate").addEventListener("click", function(){
+      var profile = buildProfileFromState();
+      if(!profile){ updateGenerateHint(); return; }
+      runAnalyzing(profile);
+    });
+
+    $("#start-over-btn").addEventListener("click", function(){
+      showScreen("screen-start");
+    });
+
+    $("#modal-close").addEventListener("click", closeModal);
+    $("#modal-backdrop").addEventListener("click", function(e){ if(e.target === this) closeModal(); });
+    document.addEventListener("keydown", function(e){ if(e.key === "Escape" && !$("#modal-backdrop").hidden) closeModal(); });
+
+    showScreen("screen-start");
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
+</script>
+
+</body></html>

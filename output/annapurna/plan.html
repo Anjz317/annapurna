@@ -1,0 +1,467 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<title>Project Annapurna</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F7F1;
+    --surface:#FFFFFF;
+    --surface-soft:#EEF2E8;
+    --ink:#1C2620;
+    --ink-soft:#4B5A4F;
+    --ink-faint:#7C8A7C;
+    --line:#DCE4D6;
+    --accent:#B8720F;
+    --accent-ink:#2A1800;
+    --accent-soft:#F4E3C6;
+    --accent2:#2F6F5E;
+    --accent2-soft:#DCEEE8;
+    --shadow: 0 1px 2px rgba(28,38,32,.06), 0 8px 24px -12px rgba(28,38,32,.18);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121810;
+      --surface:#1A2118;
+      --surface-soft:#212B1E;
+      --ink:#ECF1E7;
+      --ink-soft:#B7C4B4;
+      --ink-faint:#7E8C7C;
+      --line:#2B372A;
+      --accent:#E0A23D;
+      --accent-ink:#241500;
+      --accent-soft:#3A2C10;
+      --accent2:#5AB79C;
+      --accent2-soft:#173029;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121810;
+    --surface:#1A2118;
+    --surface-soft:#212B1E;
+    --ink:#ECF1E7;
+    --ink-soft:#B7C4B4;
+    --ink-faint:#7E8C7C;
+    --line:#2B372A;
+    --accent:#E0A23D;
+    --accent-ink:#241500;
+    --accent-soft:#3A2C10;
+    --accent2:#5AB79C;
+    --accent2-soft:#173029;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans',system-ui,-apple-system,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;}
+  [hidden]{display:none!important;}
+  .wrap{
+    max-width:780px;
+    margin:0 auto;
+    padding-inline:20px;
+    padding-block:56px 80px;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',Georgia,serif;
+    font-weight:600;
+    color:var(--ink);
+    text-wrap:balance;
+    margin:0;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent2);
+    display:flex;
+    align-items:center;
+    gap:.6em;
+    margin:0 0 .9em;
+  }
+  .eyebrow::before{
+    content:"";
+    width:1.4em;height:1px;
+    background:var(--accent2);
+    display:inline-block;
+  }
+  header.hero{
+    padding-bottom:36px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:44px;
+  }
+  header.hero h1{
+    font-size:clamp(2.1rem,5.5vw,3rem);
+    line-height:1.08;
+    letter-spacing:-.01em;
+  }
+  .tagline{
+    font-size:1.1rem;
+    color:var(--ink-soft);
+    margin-top:.7em;
+    max-width:44ch;
+  }
+  .brief{
+    margin-top:28px;
+    padding:20px 22px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    box-shadow:var(--shadow);
+  }
+  .brief dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 18px;}
+  .brief dt{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);white-space:nowrap;padding-top:.2em;}
+  .brief dd{margin:0;color:var(--ink-soft);}
+
+  section{margin-top:56px;}
+  section > h2{
+    font-size:1.5rem;
+    margin-bottom:18px;
+  }
+  p{color:var(--ink-soft);margin:.9em 0;max-width:66ch;}
+  p.lead{color:var(--ink);font-size:1.05rem;}
+  strong{color:var(--ink);}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:620px){.cols{grid-template-columns:1fr;}}
+  .box{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 20px;
+  }
+  .box h3{font-size:1rem;font-family:'Work Sans',sans-serif;font-weight:600;margin-bottom:8px;}
+  .box.in{border-left:3px solid var(--accent2);}
+  .box.out{border-left:3px solid var(--ink-faint);}
+  .box ul{margin:0;padding-left:1.1em;color:var(--ink-soft);}
+  .box li{margin:.35em 0;}
+
+  .findings{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:620px){.findings{grid-template-columns:1fr;}}
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 18px;
+    box-shadow:var(--shadow);
+  }
+  .card h4{margin:0 0 6px;font-size:.98rem;font-family:'Work Sans',sans-serif;font-weight:600;}
+  .card p{margin:0;font-size:.92rem;}
+  .card .src{
+    display:block;margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    color:var(--accent2);text-decoration:none;word-break:break-word;
+  }
+  .card .src:hover{text-decoration:underline;}
+
+  .callout{
+    background:var(--accent-soft);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-top:18px;
+  }
+  .callout p{color:var(--accent-ink);margin:0;max-width:none;}
+  :root:not([data-theme="light"]) .callout p, :root[data-theme="dark"] .callout p{color:var(--ink);}
+
+  .flow{counter-reset:step;margin-top:18px;}
+  .flow-step{
+    position:relative;
+    padding:0 0 26px 42px;
+    border-left:1px solid var(--line);
+    margin-left:14px;
+  }
+  .flow-step:last-child{border-color:transparent;padding-bottom:0;}
+  .flow-step::before{
+    counter-increment:step;
+    content:counter(step);
+    position:absolute;left:-14px;top:0;
+    width:28px;height:28px;border-radius:50%;
+    background:var(--accent);color:var(--accent-ink);
+    font-family:'IBM Plex Mono',monospace;font-size:.8rem;font-weight:500;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .flow-step h4{margin:0 0 4px;font-size:1rem;font-family:'Work Sans',sans-serif;font-weight:600;}
+  .flow-step p{margin:0;font-size:.94rem;}
+
+  table{width:100%;border-collapse:collapse;font-size:.88rem;}
+  .tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin-top:16px;}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;}
+  thead th{
+    font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-faint);background:var(--surface-soft);
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  td.num{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;color:var(--ink-soft);}
+  td strong{display:block;}
+  .tag{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+    padding:.2em .6em;border-radius:99px;background:var(--accent2-soft);color:var(--accent2);
+    letter-spacing:.02em;
+  }
+
+  .rules{margin-top:16px;display:grid;gap:10px;}
+  .rule-row{
+    display:grid;grid-template-columns:180px 1fr;gap:16px;
+    background:var(--surface);border:1px solid var(--line);border-radius:8px;
+    padding:12px 16px;align-items:start;
+  }
+  @media (max-width:620px){.rule-row{grid-template-columns:1fr;}}
+  .rule-row .flag{font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--accent);}
+  .rule-row p{margin:0;font-size:.9rem;}
+
+  .risks{margin:0;padding:0;list-style:none;display:grid;gap:10px;}
+  .risks li{
+    background:var(--surface);border:1px solid var(--line);border-radius:8px;
+    padding:12px 16px;font-size:.92rem;color:var(--ink-soft);
+    border-left:3px solid var(--accent);
+  }
+  .risks li strong{color:var(--ink);}
+
+  .sources{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:.86rem;}
+  .sources a{color:var(--accent2);text-decoration:none;}
+  .sources a:hover{text-decoration:underline;}
+  .sources li{color:var(--ink-faint);}
+
+  footer{
+    margin-top:64px;padding-top:24px;border-top:1px solid var(--line);
+    font-size:.85rem;color:var(--ink-faint);
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Prototype plan</div>
+    <h1>Project Annapurna</h1>
+    <p class="tagline">A working name for the prototype below — an AI-personalized, biomarker-aware Indian meal planner that hands you the recipe, not just the food name.</p>
+    <div class="brief">
+      <dl>
+        <dt>Problem</dt>
+        <dd>People get generic diet advice that ignores their actual biomarkers and doesn't reflect how India eats.</dd>
+        <dt>Objective</dt>
+        <dd>Analyze biomarkers, dietary preference, and health goals to generate personalized weekly or monthly Indian meal plans — with a full recipe for every meal — grounded in current nutritional science.</dd>
+        <dt>This plan</dt>
+        <dd>Scopes a self-contained prototype (no real backend, no live model calls) that demonstrates the full experience convincingly.</dd>
+      </dl>
+    </div>
+  </header>
+
+  <section>
+    <div class="eyebrow">Audience &amp; scope</div>
+    <h2>What this prototype is for</h2>
+    <p class="lead">Built as a personal proof-of-concept — to prove the end-to-end idea works and feels right, not as a clinically validated product.</p>
+    <div class="cols">
+      <div class="box in">
+        <h3>In scope</h3>
+        <ul>
+          <li>Pick a sample persona <em>or</em> enter your own biomarkers, preferences, and goals</li>
+          <li>Weekly (7-day) and monthly (4-week) plan modes</li>
+          <li>Rule-based personalization presented as an AI analysis</li>
+          <li>Full recipe for every meal — ingredients, steps, nutrition, prep time</li>
+          <li>Indian regional coverage: North, South, East, West</li>
+          <li>Vegetarian, vegan, eggetarian, non-vegetarian, Jain diets</li>
+        </ul>
+      </div>
+      <div class="box out">
+        <h3>Out of scope</h3>
+        <ul>
+          <li>Real lab report parsing or wearable/device integration</li>
+          <li>Live LLM or nutrition-API calls</li>
+          <li>Clinical validation of any recommendation</li>
+          <li>Accounts, payments, long-term progress tracking</li>
+          <li>Dietitian-reviewed, exhaustive recipe database</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Research · what exists today</div>
+    <h2>The landscape</h2>
+    <p>Biomarker-first personalized nutrition is established globally but food-logging still dominates in India. That gap is where this prototype sits.</p>
+
+    <div class="findings">
+      <div class="card">
+        <h4>ZOE — microbiome + blood biomarkers</h4>
+        <p>At-home test analyzes gut microbiome, blood sugar, and blood fat response; app scores meals daily against that personal profile.</p>
+        <a class="src" href="https://play.google.com/store/apps/details/ZOE_Personalized_Nutrition?id=com.joinzoe.results&amp;hl=en_GB" target="_blank" rel="noopener">play.google.com — ZOE</a>
+      </div>
+      <div class="card">
+        <h4>InsideTracker — ~120 biomarkers</h4>
+        <p>Combines blood, DNA, and fitness-tracker data; maps nutrient intake directly onto blood biomarker movement over time.</p>
+        <a class="src" href="https://www.nutritioninsight.com/news/insidetracker-terra-blood-test-personalized-nutrition.html" target="_blank" rel="noopener">nutritioninsight.com — InsideTracker</a>
+      </div>
+      <div class="card">
+        <h4>Nutrisense — CGM-driven</h4>
+        <p>Continuous glucose monitoring paired with dietitian coaching, bundled with InsideTracker's blood panel for a combined metabolic view.</p>
+        <a class="src" href="https://www.nutrisense.io/blog/insidetracker-nutrisense-cgm-bundle" target="_blank" rel="noopener">nutrisense.io — CGM bundle</a>
+      </div>
+      <div class="card">
+        <h4>HealthifyMe — India's leader</h4>
+        <p>10,000+ Indian foods database; "Ria" AI coach personalizes from food logs, exercise, sleep — but starts from logging, not biomarkers.</p>
+        <a class="src" href="https://www.healthifyme.com/in/" target="_blank" rel="noopener">healthifyme.com</a>
+      </div>
+      <div class="card">
+        <h4>Fitelo — AI + human coach</h4>
+        <p>AI-enabled analysis of habits and medical history, paired with a dietitian/doctor/trainer team; 20,000+ clients across 15+ countries.</p>
+        <a class="src" href="https://indialt.in/product/fitelo" target="_blank" rel="noopener">indialt.in — Fitelo</a>
+      </div>
+      <div class="card">
+        <h4>NutriScan — Indian-food-native tracking</h4>
+        <p>Built specifically around Indian food culture for meal logging and nutrition insight, rather than biomarker-to-plan generation.</p>
+        <a class="src" href="https://nutriscan.app/apps/ai-food-tracker-en" target="_blank" rel="noopener">nutriscan.app</a>
+      </div>
+    </div>
+
+    <div class="callout">
+      <p><strong>The whitespace:</strong> ZOE and InsideTracker start from biomarkers but aren't Indian-food-aware. HealthifyMe, Fitelo, and NutriScan know Indian food deeply but start from logging, not biomarkers — and none hand you a full, cook-ready recipe as the output. A biomarker-first flow that ends in an actual Indian recipe is the gap this prototype fills.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Research · the science backbone</div>
+    <h2>Grounding the logic in real nutrition science</h2>
+    <p>Two Indian data sources anchor the rule engine so the plan isn't just plausible-looking, it's traceable to actual guidance.</p>
+    <div class="findings">
+      <div class="card">
+        <h4>ICMR-NIN Dietary Guidelines / My Plate</h4>
+        <p>Government baseline: 8 food groups per plate; cereals ≤45% of energy, pulses/eggs/flesh foods ~14–15%, total fat ≤30%, nuts/oilseeds/dairy 8–10%. Used as the default balance before any biomarker adjustment.</p>
+        <a class="src" href="https://www.nin.res.in/downloads/My_Plate_for_the_day_J24.pdf" target="_blank" rel="noopener">nin.res.in — My Plate 2024</a>
+      </div>
+      <div class="card">
+        <h4>Glycemic index of Indian foods</h4>
+        <p>200+ Indian foods indexed for GI/GL — e.g. besan roti (GI 28) vs. wheat roti (GI 60) vs. maize roti (GI 63) — the lever for blood-sugar-flagged personas.</p>
+        <a class="src" href="https://glycemicindia.com/" target="_blank" rel="noopener">glycemicindia.com</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Product</div>
+    <h2>How Annapurna works, screen by screen</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <h4>Start</h4>
+        <p>Choose "Try a sample profile" or "Enter my own info." Either path leads to the same engine.</p>
+      </div>
+      <div class="flow-step">
+        <h4>Profile</h4>
+        <p>Sample: pick from six personas spanning regions, diets, and biomarker flags (below). Manual: a short form for biomarkers (with a normal-range hint next to each field), dietary preference, region preference, and health goal — plus the weekly/monthly toggle.</p>
+      </div>
+      <div class="flow-step">
+        <h4>"Analyzing"</h4>
+        <p>A brief scripted sequence narrates the read-out — "Reading HbA1c… flagging insulin sensitivity… matching low-GI staples" — before the plan renders. It's the rule engine below, dramatized.</p>
+      </div>
+      <div class="flow-step">
+        <h4>Plan grid</h4>
+        <p>Days × meals (breakfast, mid-morning, lunch, snack, dinner). Monthly mode adds a week selector. A rationale strip at the top ties the whole plan back to the inputs that shaped it.</p>
+      </div>
+      <div class="flow-step">
+        <h4>Recipe detail</h4>
+        <p>Click any meal to open its full recipe: ingredients in Indian units, method, nutrition estimate, prep time, and the one-line reason it was chosen for this profile.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Product</div>
+    <h2>Sample personas</h2>
+    <p>Covers four regions, five diet types, and the biomarker flags the rule engine needs to demonstrate real variation.</p>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr><th>Persona</th><th>Flag</th><th>Diet</th><th>Region</th><th>Goal</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Anjali</strong>, 34, Bengaluru</td><td class="num">HbA1c 6.1%</td><td>Vegetarian</td><td>South</td><td>Blood sugar control</td></tr>
+          <tr><td><strong>Rohan</strong>, 41, Delhi</td><td class="num">LDL 162 mg/dL</td><td>Non-vegetarian</td><td>North</td><td>Heart health</td></tr>
+          <tr><td><strong>Meera</strong>, 29, Mumbai</td><td class="num">Vit D 14 ng/mL</td><td>Vegan</td><td>West</td><td>Energy &amp; wellness</td></tr>
+          <tr><td><strong>Suresh</strong>, 52, Kolkata</td><td class="num">TSH 6.8 µIU/mL</td><td>Eggetarian</td><td>East</td><td>Weight loss</td></tr>
+          <tr><td><strong>Priya</strong>, 26, Ahmedabad</td><td class="num">PCOS</td><td>Jain</td><td>West</td><td>Hormonal balance</td></tr>
+          <tr><td><strong>Karthik</strong>, 31, Chennai</td><td class="num">All normal</td><td>Non-vegetarian</td><td>South</td><td>Muscle gain</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Data approach</div>
+    <h2>The personalization logic, made honest</h2>
+    <p>No live model call. Inputs — sample or manual — resolve to a small set of flags, and flags filter a curated, tagged recipe pool. It's deterministic, but the on-screen framing treats it as an analysis, since that's the experience being prototyped.</p>
+    <div class="rules">
+      <div class="rule-row"><div class="flag">glucose / HbA1c ↑</div><p>Prioritize low-GI grains (millets, besan/chana roti), pulses-forward meals, no added sugar.</p></div>
+      <div class="rule-row"><div class="flag">LDL / triglycerides ↑</div><p>Reduce ghee-fried preparations, raise fiber and nuts (moderated), favor mustard-oil / steamed regional options.</p></div>
+      <div class="rule-row"><div class="flag">vitamin D / B12 / iron ↓</div><p>Weight toward eggs (if non-veg/eggetarian), mushrooms, ragi, jaggery, and iron-rich leafy greens.</p></div>
+      <div class="rule-row"><div class="flag">thyroid (TSH) flag</div><p>Iodine-aware substitutions; note moderation on raw cruciferous vegetables.</p></div>
+      <div class="rule-row"><div class="flag">goal: weight loss</div><p>Cap portion/calorie targets; raise protein-to-carb ratio within the diet type.</p></div>
+      <div class="rule-row"><div class="flag">goal: muscle gain</div><p>Raise protein sources — paneer, dals, egg, chicken — within the diet type and region.</p></div>
+      <div class="rule-row"><div class="flag">diet + region</div><p>Filters the recipe pool (e.g. Jain excludes onion/garlic/root vegetables) and weights it toward the chosen region without losing variety.</p></div>
+    </div>
+    <p>~20–24 tagged recipes across the four regions and five diet types is enough headroom for a non-repeating week and a rotating four-week month.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">Tech approach</div>
+    <h2>How it gets built</h2>
+    <p>A single self-contained page. No framework — the interactions are input → filter a local dataset → render a grid, which vanilla HTML/CSS/JS handles cleanly. The recipe and rule dataset lives as an embedded JS object. <code>localStorage</code> remembers the last profile used between visits, as a convenience only — nothing is shared across viewers or stored server-side, so no live backend is needed for this prototype.</p>
+  </section>
+
+  <section>
+    <div class="eyebrow">Roadmap</div>
+    <h2>Build milestones</h2>
+    <div class="flow">
+      <div class="flow-step"><h4>Input flow</h4><p>Persona picker, manual form, weekly/monthly toggle.</p></div>
+      <div class="flow-step"><h4>Recipe &amp; rule dataset</h4><p>Curate ~20 recipes tagged by region, diet, and biomarker/goal relevance.</p></div>
+      <div class="flow-step"><h4>Plan generator</h4><p>Rule engine plus the scripted "analyzing" transition.</p></div>
+      <div class="flow-step"><h4>Plan grid view</h4><p>Week/month rendering with the rationale strip.</p></div>
+      <div class="flow-step"><h4>Recipe detail view</h4><p>Full recipe panel per meal.</p></div>
+      <div class="flow-step"><h4>Design pass</h4><p>Polish, empty/edge states, mobile layout.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="eyebrow">Before building</div>
+    <h2>Open questions &amp; risks</h2>
+    <ul class="risks">
+      <li><strong>Not medical advice.</strong> The prototype should say so on-screen — the logic is illustrative, not clinically validated.</li>
+      <li><strong>Recipe breadth is deliberately limited.</strong> A real product needs a much larger, dietitian-reviewed database; this prototype trades breadth for a working demo.</li>
+      <li><strong>Monthly view will rotate, not hand-author, 30 days.</strong> A small set of weekly templates repeats with light variation across four weeks — confirm that's an acceptable shortcut for a prototype.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p style="margin:0 0 10px;color:var(--ink-faint);">Sources</p>
+    <ul class="sources">
+      <li><a href="https://play.google.com/store/apps/details/ZOE_Personalized_Nutrition?id=com.joinzoe.results&amp;hl=en_GB" target="_blank" rel="noopener">ZOE — Google Play listing</a></li>
+      <li><a href="https://www.nutritioninsight.com/news/insidetracker-terra-blood-test-personalized-nutrition.html" target="_blank" rel="noopener">InsideTracker × Terra — NutritionInsight</a></li>
+      <li><a href="https://www.nutrisense.io/blog/insidetracker-nutrisense-cgm-bundle" target="_blank" rel="noopener">Nutrisense × InsideTracker CGM bundle</a></li>
+      <li><a href="https://www.healthifyme.com/in/" target="_blank" rel="noopener">HealthifyMe</a></li>
+      <li><a href="https://startuptalky.com/top-fitness-diet-apps-india-listicle/" target="_blank" rel="noopener">Top fitness/diet apps in India — StartupTalky</a></li>
+      <li><a href="https://indialt.in/product/fitelo" target="_blank" rel="noopener">Fitelo — IndiAlt</a></li>
+      <li><a href="https://nutriscan.app/apps/ai-food-tracker-en" target="_blank" rel="noopener">NutriScan</a></li>
+      <li><a href="https://www.nin.res.in/downloads/My_Plate_for_the_day_J24.pdf" target="_blank" rel="noopener">ICMR-NIN — My Plate for the Day (2024)</a></li>
+      <li><a href="https://nin.res.in/dietaryguidelines/pdfjs/locale/DGI_2024.pdf" target="_blank" rel="noopener">ICMR-NIN — Dietary Guidelines for Indians (2024)</a></li>
+      <li><a href="https://glycemicindia.com/" target="_blank" rel="noopener">GlycemicIndia — GI/GL database</a></li>
+      <li><a href="https://www.fitterfly.com/blog/glycemic-index-chart-of-indian-foods/" target="_blank" rel="noopener">Fitterfly — GI chart of Indian foods</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13012459/" target="_blank" rel="noopener">Blood &amp; fitness-tracker biomarker improvements — PMC</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11643751/" target="_blank" rel="noopener">Biomarker-guided dietary supplementation — PMC</a></li>
+      <li><a href="https://www.masakali.co.uk/indian-regional-cuisine/" target="_blank" rel="noopener">Indian regional cuisine — Masakali</a></li>
+      <li><a href="https://meeshaforyou.com/blog/understanding-regional-differences-in-traditional-indian-food" target="_blank" rel="noopener">Regional differences in Indian food — Meesha</a></li>
+    </ul>
+    <p style="margin-top:22px;">Prepared via the problem-to-prototype workflow · workflows/problem-to-prototype.md</p>
+  </footer>
+
+</div>
+
+</body></html>

@@ -1,0 +1,17 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*secret*
+*apikey*
+*api_key*
+**/secrets.*
+credentials.json
+
+# Markdown notes (personal/workspace context, not meant for the repo)
+*.md
+
+# Local tool state
+.claude/
