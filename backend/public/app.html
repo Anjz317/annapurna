@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Annapurna</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme: light;
+    --bg:#F5F7F1; --surface:#FFFFFF; --surface-soft:#EEF2E8;
+    --ink:#1C2620; --ink-soft:#4B5A4F; --ink-faint:#7C8A7C; --line:#DCE4D6;
+    --accent:#B8720F; --accent-ink:#2A1800; --accent-soft:#F4E3C6;
+    --accent2:#2F6F5E; --accent2-soft:#DCEEE8;
+    --danger:#B83A1E; --danger-soft:#F6DED6;
+    --shadow: 0 1px 2px rgba(28,38,32,.06), 0 8px 24px -12px rgba(28,38,32,.22);
+  }
+  @media (prefers-color-scheme: dark){ :root{
+    color-scheme: dark;
+    --bg:#121810; --surface:#1A2118; --surface-soft:#212B1E;
+    --ink:#ECF1E7; --ink-soft:#B7C4B4; --ink-faint:#7E8C7C; --line:#2B372A;
+    --accent:#E0A23D; --accent-ink:#241500; --accent-soft:#3A2C10;
+    --accent2:#5AB79C; --accent2-soft:#173029; --danger:#E4725A; --danger-soft:#3A1F17;
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px -12px rgba(0,0,0,.55);
+  }}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Work Sans',system-ui,sans-serif;font-size:16px;line-height:1.55;}
+  [hidden]{display:none!important;}
+  .wrap{max-width:860px;margin:0 auto;padding-inline:20px;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding-block:20px;border-bottom:1px solid var(--line);}
+  .brand{font-family:'Fraunces',serif;font-weight:600;font-size:1.3rem;}
+  #whoami{font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--ink-faint);}
+  main{padding-block:40px 60px;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;margin:0 0 .4em;}
+  h2{font-size:1.4rem;}
+  p{color:var(--ink-soft);}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:var(--shadow);}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:.85rem;font-weight:600;margin-bottom:4px;}
+  .field .hint{display:block;font-size:.72rem;color:var(--ink-faint);margin-top:3px;font-family:'IBM Plex Mono',monospace;}
+  input,select,textarea{width:100%;padding:.65em .75em;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);font-size:.95rem;font-family:inherit;}
+  textarea{resize:vertical;}
+  .btn{font-weight:600;font-size:.92rem;padding:.75em 1.3em;border-radius:9px;border:1px solid transparent;cursor:pointer;}
+  .btn-primary{background:var(--accent);color:var(--accent-ink);}
+  .btn-secondary{background:var(--surface);border-color:var(--line);color:var(--ink);}
+  .btn:disabled{opacity:.5;cursor:default;}
+  .error{background:var(--danger-soft);color:var(--danger);padding:10px 14px;border-radius:8px;font-size:.88rem;margin-bottom:14px;}
+  .tabs{display:flex;gap:18px;border-bottom:1px solid var(--line);margin-bottom:20px;}
+  .tab{background:none;border:none;padding:.6em 0;font-weight:600;color:var(--ink-faint);cursor:pointer;border-bottom:2px solid transparent;}
+  .tab.active{color:var(--ink);border-color:var(--accent);}
+  .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media (max-width:560px){.form-grid{grid-template-columns:1fr;}}
+  .chip{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;padding:.25em .6em;border-radius:99px;background:var(--surface-soft);color:var(--ink-soft);}
+  .chip.goal{background:var(--accent2-soft);color:var(--accent2);}
+  .rationale{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:18px 0;}
+  .rationale h3{font-size:.9rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent2);margin-bottom:8px;}
+  .drinks{display:grid;gap:10px;margin:18px 0;}
+  .drink-card{background:var(--accent2-soft);border-radius:10px;padding:14px 16px;}
+  .drink-card .name{font-weight:600;}
+  .drink-card .note{font-size:.85rem;color:var(--ink-soft);margin-top:4px;}
+  .grid-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin-top:10px;}
+  table{border-collapse:collapse;width:100%;min-width:740px;}
+  th,td{padding:8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;}
+  thead th{font-family:'IBM Plex Mono',monospace;font-size:.68rem;text-transform:uppercase;color:var(--ink-faint);background:var(--surface-soft);white-space:nowrap;}
+  td.slot-head{font-weight:600;white-space:nowrap;background:var(--surface);position:sticky;left:0;}
+  .meal-card{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;cursor:pointer;min-width:130px;}
+  .meal-card:hover{border-color:var(--accent2);}
+  .meal-card .m-name{font-size:.82rem;font-weight:600;}
+  .meal-card .m-cal{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;color:var(--ink-faint);margin-top:4px;}
+  .week-tabs{display:flex;gap:8px;margin:14px 0;}
+  .week-tab{font-family:'IBM Plex Mono',monospace;font-size:.78rem;padding:.4em .9em;border-radius:8px;border:1px solid var(--line);background:var(--surface);cursor:pointer;}
+  .week-tab.active{border-color:var(--accent);background:var(--accent-soft);color:var(--ink);}
+  .modal-backdrop{position:fixed;inset:0;background:rgba(20,26,20,.5);display:flex;align-items:center;justify-content:center;padding:20px;z-index:10;}
+  .modal{background:var(--surface);border-radius:14px;max-width:540px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;position:relative;}
+  .modal-close{position:absolute;top:14px;right:14px;background:var(--surface-soft);border:1px solid var(--line);border-radius:50%;width:30px;height:30px;cursor:pointer;}
+  .feedback-banner{background:var(--accent-soft);border-radius:12px;padding:18px 20px;margin-bottom:22px;}
+  .feedback-banner.done{background:var(--accent2-soft);}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .plan-toggle{display:inline-flex;border:1px solid var(--line);border-radius:99px;padding:3px;background:var(--surface);}
+  .plan-toggle button{border:none;background:none;padding:.5em 1.1em;border-radius:99px;font-weight:600;font-size:.82rem;cursor:pointer;color:var(--ink-faint);}
+  .plan-toggle button.active{background:var(--accent);color:var(--accent-ink);}
+  footer.disclaimer{text-align:center;font-size:.76rem;color:var(--ink-faint);padding:20px;}
+  .persona-card{text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;box-shadow:var(--shadow);}
+  .persona-card:hover{border-color:var(--accent2);}
+  .persona-card .p-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;}
+  .persona-card .p-meta{font-size:.78rem;color:var(--ink-faint);margin:2px 0 10px;}
+  .persona-card .p-flags{display:flex;flex-wrap:wrap;gap:5px;}
+  @media (max-width:680px){ #persona-grid{grid-template-columns:repeat(2,1fr)!important;} }
+  @media (max-width:460px){ #persona-grid{grid-template-columns:1fr!important;} }
+
+  /* ---- Landing ---- */
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.8em;}
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;padding-block:10px 20px;}
+  @media (max-width:680px){ .hero{grid-template-columns:1fr;} }
+  .hero h1{font-size:clamp(2rem,5vw,2.8rem);line-height:1.08;letter-spacing:-.01em;margin-bottom:.4em;}
+  .lede{color:var(--ink-soft);font-size:1.05rem;max-width:42ch;margin-bottom:1.4em;}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px;}
+  .continue-link{display:inline-block;margin-top:16px;font-size:.85rem;color:var(--accent2);background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+  .benefits-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px;}
+  @media (max-width:760px){ .benefits-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:460px){ .benefits-grid{grid-template-columns:1fr;} }
+  .benefit-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow);}
+  .benefit-card h3{font-size:.95rem;font-family:'Work Sans',sans-serif;font-weight:600;margin-bottom:6px;}
+  .benefit-card p{font-size:.85rem;margin:0;}
+
+  .thali{position:relative;width:100%;max-width:300px;aspect-ratio:1;margin-inline:auto;}
+  .thali .rim{position:absolute;inset:0;border-radius:50%;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);}
+  .thali .rice{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:38%;height:38%;border-radius:50%;background:var(--surface-soft);border:1px solid var(--line);}
+  .thali .katori{position:absolute;width:26%;height:26%;border-radius:50%;border:1px solid var(--line);box-shadow:var(--shadow);animation:settle .6s ease both;}
+  .thali .k1{background:var(--accent-soft);top:6%;left:50%;transform:translateX(-50%);animation-delay:.05s;}
+  .thali .k2{background:var(--accent2-soft);top:50%;right:4%;transform:translateY(-50%);animation-delay:.15s;}
+  .thali .k3{background:var(--accent-soft);bottom:6%;left:50%;transform:translateX(-50%);animation-delay:.25s;}
+  .thali .k4{background:var(--accent2-soft);top:50%;left:4%;transform:translateY(-50%);animation-delay:.35s;}
+  @keyframes settle{from{opacity:0;transform:scale(.6) translateY(-50%);}to{opacity:1;}}
+  @media (prefers-reduced-motion: reduce){ .thali .katori{animation:none;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">Annapurna</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span id="whoami" hidden></span>
+      <button class="btn btn-secondary" id="btn-logout" hidden>Log out</button>
+    </div>
+  </div>
+
+  <main>
+    <!-- LANDING / HOME -->
+    <section id="screen-landing">
+      <div class="hero">
+        <div>
+          <div class="eyebrow">Personalized Meal Planning</div>
+          <h1>Eat for the body you have today.</h1>
+          <p class="lede">Annapurna reads your biomarkers, diet, and goals, then builds a regionally authentic Indian meal plan around them — with a full recipe for every dish. Update your goal or your latest labs any time, and your plan follows.</p>
+          <div class="cta-row">
+            <button class="btn btn-primary" id="btn-home-signup">Create an account</button>
+            <button class="btn btn-secondary" id="btn-home-login">Log in</button>
+          </div>
+          <button class="continue-link" id="btn-home-sample">Or try a sample profile, no account needed →</button>
+        </div>
+        <div class="thali" aria-hidden="true">
+          <div class="rim"></div>
+          <div class="katori k1"></div>
+          <div class="katori k2"></div>
+          <div class="katori k3"></div>
+          <div class="katori k4"></div>
+          <div class="rice"></div>
+        </div>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <h3>Personalized, not generic</h3>
+          <p>Built from your actual HbA1c, LDL, vitamin D, TSH, and iron — not a one-size-fits-all chart.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>Real Indian food</h3>
+          <p>North, South, East, West, five diet types — full recipes for every meal, not just a food list.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>Adapts as you do</h3>
+          <p>Change your goal from blood-sugar control to muscle gain any time. Your plan updates with you, and your history is kept.</p>
+        </div>
+        <div class="benefit-card">
+          <h3>Grounded in evidence</h3>
+          <p>Meal structure and recommended drinks are based on real nutrition research — cited, not guessed.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUTH -->
+    <section id="screen-auth" hidden>
+      <button class="continue-link" id="btn-auth-home-back" style="margin-bottom:16px;">← Back to home</button>
+      <div class="card" style="max-width:420px;margin:0 auto;">
+        <div class="tabs">
+          <button class="tab active" id="tab-login">Log in</button>
+          <button class="tab" id="tab-signup">Sign up</button>
+        </div>
+        <div id="auth-error" class="error" hidden></div>
+        <form id="form-auth">
+          <div class="field"><label for="auth-email">Email</label><input type="email" id="auth-email" required autocomplete="email"></div>
+          <div class="field"><label for="auth-password">Password</label><input type="password" id="auth-password" required autocomplete="current-password"><span class="hint" id="auth-password-hint"></span></div>
+          <button class="btn btn-primary" type="submit" id="btn-auth-submit" style="width:100%;">Log in</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- SAMPLE PERSONA PICKER (no login) -->
+    <section id="screen-sample-picker" hidden>
+      <button class="btn btn-secondary" id="btn-sample-back" style="margin-bottom:16px;">← Back</button>
+      <h2>Pick a profile</h2>
+      <p>Six profiles spanning diet, region, and biomarker flags — nothing is saved, this is just a look at how the plan adapts.</p>
+      <div id="persona-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;"></div>
+    </section>
+
+    <!-- PROFILE SETUP / EDIT -->
+    <section id="screen-profile" hidden>
+      <h2 id="profile-heading">Set up your profile</h2>
+      <p>Biomarkers, diet, and goal all live on your account now, and you can update any of them any time — your plan regenerates from whatever is current.</p>
+      <div id="profile-error" class="error" hidden></div>
+      <div class="card">
+        <h3 style="font-size:1rem;">Biomarkers</h3>
+        <p style="font-size:.85rem;">Leave anything you don't know blank — that's fine, the plan just won't adjust for it.</p>
+        <div class="form-grid">
+          <div class="field"><label for="p-hba1c">HbA1c (%)</label><input type="number" step="0.1" id="p-hba1c"><span class="hint">Normal: below 5.7</span></div>
+          <div class="field"><label for="p-ldl">LDL cholesterol (mg/dL)</label><input type="number" id="p-ldl"><span class="hint">Normal: below 100</span></div>
+          <div class="field"><label for="p-vitd">Vitamin D (ng/mL)</label><input type="number" id="p-vitd"><span class="hint">Normal: 30 or above</span></div>
+          <div class="field"><label for="p-tsh">TSH (µIU/mL)</label><input type="number" step="0.1" id="p-tsh"><span class="hint">Normal: 0.4–4.5</span></div>
+          <div class="field"><label for="p-iron">Iron / ferritin (ng/mL)</label><input type="number" id="p-iron"><span class="hint">Normal: 30 or above</span></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px;">
+        <h3 style="font-size:1rem;">Diet &amp; region</h3>
+        <div class="form-grid">
+          <div class="field"><label for="p-diet">Dietary preference</label>
+            <select id="p-diet">
+              <option value="vegetarian">Vegetarian</option><option value="vegan">Vegan</option>
+              <option value="eggetarian">Eggetarian</option><option value="non_vegetarian">Non-vegetarian</option>
+              <option value="jain">Jain</option>
+            </select>
+          </div>
+          <div class="field"><label for="p-region">Regional preference</label>
+            <select id="p-region">
+              <option value="north">North Indian</option><option value="south">South Indian</option>
+              <option value="east">East Indian</option><option value="west">West Indian</option>
+              <option value="any">No preference</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px;">
+        <h3 style="font-size:1rem;">Goal</h3>
+        <p style="font-size:.85rem;">You can change this any time — your plan will follow.</p>
+        <select id="p-goal">
+          <option value="wellness">General wellness</option>
+          <option value="blood_sugar">Blood sugar control</option>
+          <option value="heart_health">Heart health</option>
+          <option value="weight_loss">Weight loss</option>
+          <option value="muscle_gain">Muscle gain</option>
+          <option value="hormonal_balance">Hormonal balance (e.g. PCOS)</option>
+        </select>
+      </div>
+      <div style="margin-top:18px;display:flex;gap:12px;">
+        <button class="btn btn-primary" id="btn-save-profile">Save &amp; see my plan</button>
+        <button class="btn btn-secondary" id="btn-cancel-profile" hidden>Cancel</button>
+      </div>
+    </section>
+
+    <!-- PLAN -->
+    <section id="screen-plan" hidden>
+      <div id="demo-banner" class="feedback-banner done" hidden>
+        <strong id="demo-banner-text"></strong> — nothing here is saved.
+        <button class="btn btn-primary" id="btn-demo-signup" style="margin-left:10px;">Sign up to build your own</button>
+      </div>
+      <div id="feedback-banner" class="feedback-banner" hidden>
+        <h3 style="margin:0 0 6px;font-size:.95rem;">How's it going?</h3>
+        <p style="margin:0 0 10px;font-size:.88rem;">Seen any movement toward your goal? Any dish that was hard to make or just not for you, and why? Totally optional — skip it if you'd rather not.</p>
+        <textarea id="feedback-text" rows="3" placeholder="Write as much or as little as you like..."></textarea>
+        <div style="margin-top:8px;display:flex;gap:10px;">
+          <button class="btn btn-primary" id="btn-send-feedback">Share feedback</button>
+          <button class="btn btn-secondary" id="btn-skip-feedback">Not now</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="form-grid" style="grid-template-columns:none;display:flex;gap:8px;flex-wrap:wrap;" id="profile-chips"></div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <div class="plan-toggle">
+            <button id="toggle-weekly" class="active">Weekly</button>
+            <button id="toggle-monthly">Monthly</button>
+          </div>
+          <button class="btn btn-secondary" id="btn-edit-profile">Edit profile</button>
+          <button class="btn btn-secondary" id="btn-choose-persona" hidden>Choose another profile</button>
+        </div>
+      </div>
+
+      <div class="rationale">
+        <h3>Why this plan</h3>
+        <ul id="rationale-list" style="margin:0;padding-left:1.1em;color:var(--ink-soft);font-size:.9rem;"></ul>
+      </div>
+
+      <div id="drinks-section" class="drinks" hidden></div>
+
+      <div id="week-tabs" class="week-tabs" hidden></div>
+      <div class="grid-wrap">
+        <table>
+          <thead><tr id="grid-head"></tr></thead>
+          <tbody id="grid-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="disclaimer">Prototype only — illustrative meal suggestions from rule-based logic, not medical or dietary advice.</footer>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop" hidden>
+  <div class="modal">
+    <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s){ return document.querySelector(s); };
+  var $all = function(s){ return document.querySelectorAll(s); };
+
+  var DIET_LABELS = {vegetarian:"Vegetarian", vegan:"Vegan", eggetarian:"Eggetarian", non_vegetarian:"Non-vegetarian", jain:"Jain"};
+  var REGION_LABELS = {north:"North Indian", south:"South Indian", east:"East Indian", west:"West Indian", any:"No regional preference"};
+  var GOAL_LABELS = {wellness:"General wellness", blood_sugar:"Blood sugar control", heart_health:"Heart health", weight_loss:"Weight loss", muscle_gain:"Muscle gain", hormonal_balance:"Hormonal balance"};
+  var DAY_NAMES = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  var SLOT_LABELS = {breakfast:"Breakfast", lunch:"Lunch", snack:"Snack", "snack#2":"Protein snack", dinner:"Dinner"};
+
+  var state = { authMode: "login", planLength: "weekly", currentWeeks: null, currentWeekIndex: 0, isDemo: false, personaId: null };
+
+  async function api(path, opts) {
+    opts = opts || {};
+    var res = await fetch("/api" + path, Object.assign({ credentials: "include", headers: { "Content-Type": "application/json" } }, opts));
+    var body = null;
+    try { body = await res.json(); } catch (e) {}
+    if (!res.ok) { var err = new Error((body && body.message) || (body && body.error) || "Request failed"); err.status = res.status; err.body = body; throw err; }
+    return body;
+  }
+
+  function showScreen(id) {
+    ["screen-landing", "screen-auth", "screen-sample-picker", "screen-profile", "screen-plan"].forEach(function(s) { $("#" + s).hidden = (s !== id); });
+  }
+
+  // ---- Landing ----
+  $("#btn-home-signup").addEventListener("click", function() { setAuthMode("signup"); showScreen("screen-auth"); });
+  $("#btn-home-login").addEventListener("click", function() { setAuthMode("login"); showScreen("screen-auth"); });
+  $("#btn-home-sample").addEventListener("click", openSamplePicker);
+  $("#btn-auth-home-back").addEventListener("click", function() { showScreen("screen-landing"); });
+  $(".brand").style.cursor = "pointer";
+  $(".brand").addEventListener("click", function() {
+    // Don't yank a signed-in user away from their own plan; home is still
+    // reachable for every other screen (auth, sample picker, profile setup,
+    // or a demo-mode plan view).
+    var onOwnPlan = !$("#screen-plan").hidden && !state.isDemo;
+    if (onOwnPlan) return;
+    showScreen("screen-landing");
+  });
+
+  // ---- Sample profiles (no login) ----
+  async function openSamplePicker() {
+    var personas = await api("/sample/personas");
+    renderPersonaGrid(personas);
+    showScreen("screen-sample-picker");
+  }
+  $("#btn-sample-back").addEventListener("click", function() { showScreen("screen-landing"); });
+  $("#btn-choose-persona").addEventListener("click", openSamplePicker);
+  $("#btn-demo-signup").addEventListener("click", function() { setAuthMode("signup"); showScreen("screen-auth"); });
+
+  function renderPersonaGrid(personas) {
+    var grid = $("#persona-grid");
+    grid.innerHTML = "";
+    personas.forEach(function(p) {
+      var card = document.createElement("button");
+      card.className = "persona-card";
+      card.type = "button";
+      var flagsHtml = p.flags.length
+        ? p.flags.map(function(f) { return '<span class="chip">' + f.replace(/_/g, " ") + '</span>'; }).join("")
+        : '<span class="chip">all biomarkers normal</span>';
+      card.innerHTML =
+        '<div class="p-name">' + p.name + '</div>' +
+        '<div class="p-meta">' + p.age + ' · ' + p.city + ' · ' + DIET_LABELS[p.diet] + '</div>' +
+        '<div class="p-flags">' + flagsHtml + '<span class="chip goal">' + GOAL_LABELS[p.goal] + '</span></div>';
+      card.addEventListener("click", function() { loadSamplePlan(p.id); });
+      grid.appendChild(card);
+    });
+  }
+
+  async function loadSamplePlan(personaId) {
+    state.isDemo = true;
+    state.personaId = personaId;
+    var plan = await api("/sample/plan?personaId=" + personaId + "&length=" + state.planLength);
+    state.currentWeeks = plan.weeks;
+    state.currentWeekIndex = 0;
+    renderChips(plan.profile);
+    renderRationale(plan.rationale);
+    renderDrinks(plan.recommendedDrinks);
+    renderWeekTabs();
+    renderGrid();
+    $("#demo-banner-text").textContent = "Viewing " + plan.persona.name + "'s sample plan";
+    $("#demo-banner").hidden = false;
+    $("#feedback-banner").hidden = true;
+    $("#btn-edit-profile").hidden = true;
+    $("#btn-choose-persona").hidden = false;
+    showScreen("screen-plan");
+  }
+
+  // ---- Auth ----
+  function setAuthMode(mode) {
+    state.authMode = mode;
+    $("#tab-login").classList.toggle("active", mode === "login");
+    $("#tab-signup").classList.toggle("active", mode === "signup");
+    $("#btn-auth-submit").textContent = mode === "login" ? "Log in" : "Sign up";
+    $("#auth-password-hint").textContent = mode === "signup" ? "At least 8 characters." : "";
+    $("#auth-error").hidden = true;
+  }
+  $("#tab-login").addEventListener("click", function(){ setAuthMode("login"); });
+  $("#tab-signup").addEventListener("click", function(){ setAuthMode("signup"); });
+
+  $("#form-auth").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    var email = $("#auth-email").value.trim();
+    var password = $("#auth-password").value;
+    $("#auth-error").hidden = true;
+    try {
+      await api(state.authMode === "login" ? "/auth/login" : "/auth/signup", { method: "POST", body: JSON.stringify({ email: email, password: password }) });
+      await boot();
+    } catch (err) {
+      $("#auth-error").textContent = err.message;
+      $("#auth-error").hidden = false;
+    }
+  });
+
+  $("#btn-logout").addEventListener("click", async function() {
+    await api("/auth/logout", { method: "POST" });
+    location.reload();
+  });
+
+  // ---- Profile ----
+  function fillProfileForm(profile) {
+    if (profile.biomarkers) {
+      ["hba1c","ldl","vitd","tsh","iron"].forEach(function(k){
+        $("#p-" + k).value = profile.biomarkers[k] != null ? profile.biomarkers[k] : "";
+      });
+    }
+    if (profile.dietPreference) {
+      $("#p-diet").value = profile.dietPreference.diet_type;
+      $("#p-region").value = profile.dietPreference.region_preference;
+    }
+    if (profile.goal) $("#p-goal").value = profile.goal.goal;
+  }
+
+  async function saveProfile() {
+    $("#profile-error").hidden = true;
+    try {
+      await api("/profile/biomarkers", { method: "POST", body: JSON.stringify({
+        hba1c: $("#p-hba1c").value || null, ldl: $("#p-ldl").value || null, vitd: $("#p-vitd").value || null,
+        tsh: $("#p-tsh").value || null, iron: $("#p-iron").value || null,
+      })});
+      await api("/profile/diet-preference", { method: "POST", body: JSON.stringify({
+        dietType: $("#p-diet").value, regionPreference: $("#p-region").value,
+      })});
+      await api("/profile/goal", { method: "POST", body: JSON.stringify({ goal: $("#p-goal").value })});
+      await loadPlan();
+      showScreen("screen-plan");
+    } catch (err) {
+      $("#profile-error").textContent = err.message;
+      $("#profile-error").hidden = false;
+    }
+  }
+  $("#btn-save-profile").addEventListener("click", saveProfile);
+  $("#btn-edit-profile").addEventListener("click", async function() {
+    var me = await api("/auth/me");
+    fillProfileForm(me.profile);
+    $("#profile-heading").textContent = "Update your profile";
+    $("#btn-cancel-profile").hidden = false;
+    showScreen("screen-profile");
+  });
+  $("#btn-cancel-profile").addEventListener("click", function() { showScreen("screen-plan"); });
+
+  // ---- Plan rendering ----
+  function renderChips(profile) {
+    $("#profile-chips").innerHTML =
+      '<span class="chip">' + DIET_LABELS[profile.diet] + '</span>' +
+      '<span class="chip">' + REGION_LABELS[profile.region] + '</span>' +
+      '<span class="chip goal">' + GOAL_LABELS[profile.goal] + '</span>';
+  }
+
+  function renderRationale(rationale) {
+    var list = $("#rationale-list");
+    list.innerHTML = "";
+    (rationale || []).forEach(function(r) { var li = document.createElement("li"); li.textContent = r; list.appendChild(li); });
+    if (!rationale || !rationale.length) list.innerHTML = "<li>Balanced to the ICMR-NIN My Plate model for your diet and region.</li>";
+  }
+
+  function renderDrinks(drinks) {
+    var section = $("#drinks-section");
+    if (!drinks || !drinks.length) { section.hidden = true; return; }
+    section.hidden = false;
+    section.innerHTML = drinks.map(function(d) {
+      return '<div class="drink-card"><div class="name">' + d.name + ' <span class="chip">' + d.calories + ' kcal · ' + d.protein_g + 'g protein</span></div>' +
+        '<div class="note">' + d.evidenceNote + '</div></div>';
+    }).join("");
+  }
+
+  function renderGrid() {
+    var weeks = state.currentWeeks;
+    var wIndex = state.currentWeekIndex;
+    var week = weeks[wIndex];
+    var slotKeys = Object.keys(week[0].meals);
+
+    $("#grid-head").innerHTML = '<th class="slot-head">Meal</th>' + DAY_NAMES.map(function(d){ return "<th>" + d + "</th>"; }).join("");
+    var body = $("#grid-body");
+    body.innerHTML = "";
+    slotKeys.forEach(function(key) {
+      var tr = document.createElement("tr");
+      var th = document.createElement("td");
+      th.className = "slot-head";
+      th.textContent = SLOT_LABELS[key] || key;
+      tr.appendChild(th);
+      week.forEach(function(day) {
+        var food = day.meals[key];
+        var td = document.createElement("td");
+        if (food) {
+          var btn = document.createElement("button");
+          btn.className = "meal-card";
+          btn.innerHTML = '<span class="m-name">' + food.name + '</span><span class="m-cal">' + food.calories + ' kcal</span>';
+          btn.addEventListener("click", function() { openModal(food); });
+          td.appendChild(btn);
+        }
+        tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+  }
+
+  function renderWeekTabs() {
+    var tabs = $("#week-tabs");
+    if (state.currentWeeks.length <= 1) { tabs.hidden = true; return; }
+    tabs.hidden = false;
+    tabs.innerHTML = "";
+    state.currentWeeks.forEach(function(_, i) {
+      var btn = document.createElement("button");
+      btn.className = "week-tab" + (i === state.currentWeekIndex ? " active" : "");
+      btn.textContent = "Week " + (i + 1);
+      btn.addEventListener("click", function() {
+        state.currentWeekIndex = i;
+        $all(".week-tab").forEach(function(b){ b.classList.remove("active"); });
+        btn.classList.add("active");
+        renderGrid();
+      });
+      tabs.appendChild(btn);
+    });
+  }
+
+  function openModal(food) {
+    var body = $("#modal-body");
+    body.innerHTML =
+      '<h3>' + food.name + '</h3>' +
+      '<div style="font-size:.82rem;color:var(--ink-faint);margin-bottom:14px;">' + REGION_LABELS[food.region] + ' · ' + (food.prep_time || "") + '</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;">' +
+        ['calories:kcal','protein_g:protein','carbs_g:carbs','fat_g:fat'].map(function(pair){
+          var parts = pair.split(":"); var val = food[parts[0]];
+          return '<div style="background:var(--surface-soft);border-radius:8px;padding:8px;text-align:center;"><span style="display:block;font-weight:600;">' + (val != null ? val : "-") + (parts[1]==="kcal"?"":"g") + '</span><span style="font-size:.65rem;color:var(--ink-faint);text-transform:uppercase;">' + parts[1] + '</span></div>';
+        }).join("") +
+      '</div>' +
+      '<h4 style="font-size:.8rem;text-transform:uppercase;color:var(--ink-faint);margin:14px 0 6px;">Ingredients</h4>' +
+      '<ul style="margin:0;padding-left:1.2em;color:var(--ink-soft);font-size:.9rem;">' + (food.ingredients||[]).map(function(i){ return "<li>" + i + "</li>"; }).join("") + '</ul>' +
+      '<h4 style="font-size:.8rem;text-transform:uppercase;color:var(--ink-faint);margin:14px 0 6px;">Method</h4>' +
+      '<ol style="margin:0;padding-left:1.2em;color:var(--ink-soft);font-size:.9rem;">' + (food.steps||[]).map(function(s){ return "<li>" + s + "</li>"; }).join("") + '</ol>';
+    $("#modal-backdrop").hidden = false;
+  }
+  $("#modal-close").addEventListener("click", function(){ $("#modal-backdrop").hidden = true; });
+  $("#modal-backdrop").addEventListener("click", function(e){ if (e.target === this) this.hidden = true; });
+
+  async function reloadForLengthChange() {
+    if (state.isDemo) { await loadSamplePlan(state.personaId); }
+    else { await loadPlan(); }
+  }
+  $("#toggle-weekly").addEventListener("click", function(){ if (state.planLength !== "weekly") { state.planLength = "weekly"; this.classList.add("active"); $("#toggle-monthly").classList.remove("active"); reloadForLengthChange(); } });
+  $("#toggle-monthly").addEventListener("click", function(){ if (state.planLength !== "monthly") { state.planLength = "monthly"; this.classList.add("active"); $("#toggle-weekly").classList.remove("active"); reloadForLengthChange(); } });
+
+  async function loadPlan() {
+    state.isDemo = false;
+    var plan = await api("/plan?length=" + state.planLength);
+    state.currentWeeks = plan.weeks;
+    state.currentWeekIndex = 0;
+    renderChips(plan.profile);
+    renderRationale(plan.rationale);
+    renderDrinks(plan.recommendedDrinks);
+    renderWeekTabs();
+    renderGrid();
+    $("#demo-banner").hidden = true;
+    $("#btn-edit-profile").hidden = false;
+    $("#btn-choose-persona").hidden = true;
+    await loadFeedbackBanner();
+  }
+
+  // ---- Feedback ----
+  async function loadFeedbackBanner() {
+    var due = await api("/feedback/due");
+    $("#feedback-banner").hidden = !due.due;
+  }
+  $("#btn-send-feedback").addEventListener("click", async function() {
+    var text = $("#feedback-text").value.trim();
+    if (!text) return;
+    await api("/feedback", { method: "POST", body: JSON.stringify({ feedbackText: text }) });
+    $("#feedback-text").value = "";
+    $("#feedback-banner").hidden = true;
+  });
+  $("#btn-skip-feedback").addEventListener("click", function() { $("#feedback-banner").hidden = true; });
+
+  // ---- Boot ----
+  async function boot() {
+    var me;
+    try { me = await api("/auth/me"); } catch (e) { showScreen("screen-landing"); return; }
+    $("#whoami").hidden = false;
+    $("#whoami").textContent = me.user.email;
+    $("#btn-logout").hidden = false;
+    if (!me.profileComplete) {
+      fillProfileForm(me.profile);
+      $("#profile-heading").textContent = "Set up your profile";
+      $("#btn-cancel-profile").hidden = true;
+      showScreen("screen-profile");
+      return;
+    }
+    try {
+      await loadPlan();
+      showScreen("screen-plan");
+    } catch (err) {
+      // Profile looked complete but the plan call failed for some other
+      // reason (e.g. server hiccup) -- send back to profile rather than
+      // leaving a half-rendered plan screen.
+      $("#profile-error").textContent = err.message;
+      $("#profile-error").hidden = false;
+      fillProfileForm(me.profile);
+      $("#profile-heading").textContent = "Update your profile";
+      $("#btn-cancel-profile").hidden = true;
+      showScreen("screen-profile");
+    }
+  }
+
+  setAuthMode("login");
+  boot();
+})();
+</script>
+</body>
+</html>
