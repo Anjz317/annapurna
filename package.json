@@ -1,0 +1,26 @@
+{
+  "name": "annapurna",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Annapurna meal-planner: accounts, versioned biomarker/goal history, server-side plan generation, feedback. Root package.json so Vercel's Node function builder (api/index.js) finds dependencies.",
+  "main": "backend/src/server.js",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev": "node --watch backend/src/server.js",
+    "migrate": "node backend/src/migrate.js",
+    "seed": "node backend/src/seed.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2"
+  }
+}
